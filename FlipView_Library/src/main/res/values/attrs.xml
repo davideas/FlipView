@@ -3,31 +3,32 @@
 
 	<!-- FlipCheckBox attributes -->
 	<declare-styleable name="FlipView">
-		<!-- Whether or not this component is checked by default (default: false) -->
+		<!-- Whether or not this component is checked at startup (default: false) -->
 		<attr name="checked" format="boolean" />
-		<!-- Whether or not checked status changes should be animated (default: true) -->
-		<attr name="showAnimations" format="boolean" />
-		<!-- Animation to apply when checked state goes from "not checked" to "checked" -->
-		<attr name="inAnimation" format="reference" />
-		<!-- Animation to apply when checked state goes from "checked" to "not checked" -->
-		<attr name="outAnimation" format="reference" />
 		<!-- Set the flip animation duration (default: 125ms) -->
 		<attr name="flipAnimationDuration" format="integer" />
+		<!-- Set the starting animation duration (default: scale) -->
+		<attr name="startLayoutAnimation" format="reference" />
+		<!-- Set the starting animation duration (default: 300ms) -->
+		<attr name="startLayoutAnimationDuration" format="integer" />
 
 		<!-- Front view layout resource (for checked state -> false) -->
 		<attr name="frontLayout" format="reference" />
+		<!-- Front drawable resource (for checked state -> false) -->
+		<attr name="frontBackground" format="reference" />
 		<!-- Front view color resource (for checked state -> false) -->
-		<attr name="frontColor" format="reference" />
+		<attr name="frontBackgroundColor" format="color" />
+		<!-- Front image resource -->
+		<attr name="frontImage" format="reference" />
 
 		<!-- Rear view layout resource (for checked state -> true) -->
 		<attr name="rearLayout" format="reference" />
+		<!-- Rear drawable resource (for checked state -> true) -->
+		<attr name="rearBackground" format="reference" />
 		<!-- Rear view color resource (for checked state -> true) -->
-		<attr name="rearColor" format="reference" />
+		<attr name="rearBackgroundColor" format="color" />
 		<!-- Rear accept image resource -->
-		<attr name="rearAcceptImage" format="reference" />
-
-		<!-- Whether or not to show the "accept" image (default: true) -->
-		<attr name="showAcceptImage" format="boolean" />
+		<attr name="rearImage" format="reference" />
 	</declare-styleable>
 
 </resources>

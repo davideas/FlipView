@@ -18,10 +18,15 @@ package eu.davidea.flipview;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.ViewFlipper;
 
 /**
@@ -29,13 +34,14 @@ import android.widget.ViewFlipper;
  * of the back view, and vice versa.
  * <p/>
  * Usage is very simple. You just need to add the view to any layout (like you
- * would do with any other View) and you are good to go. Of course, if you want
- * further customizations, you can assign values to the needed properties in the
- * layout or programmatically. Please, refer to those attributes documentation.
+ * would do with any other View) and you are good to go. You can customize the behaviours
+ * by assigning values to the needed properties in the layout or programmatically.
+ * Please, refer to those attributes documentation.
  * <p/>
  * By default, when the View is clicked, it will switch its state. The event is
- * is propagated with the listener {@link OnFlippingListener#onFlipped(FlipView, boolean)}.
- * Subscribe to that listener using {@link #setOnFlippingListener(OnFlippingListener)} method.
+ * propagated with the listener {@link OnFlippingListener#onFlipped(FlipView, boolean)}.
+ * You can subscribe to that listener using {@link #setOnFlippingListener(OnFlippingListener)}
+ * method.
  *
  * @author Davide Steduto
  */
@@ -69,16 +75,24 @@ public class FlipView extends ViewFlipper {
 	private static final int REAR_VIEW_INDEX = 1;
 
 	/**
-	 * Accept Animation
+	 * Use this to apply a default resource value.
 	 */
-	private Animation acceptAnimation = AnimationUtils.loadAnimation(
-			getContext(), R.anim.scale);
+	public static final int DEFAULT_RESOURCE = 0;
+	public static final int
+			SCALE_INITIAL_DELAY = 500,
+			SCALE_DURATION = 250,
+			SCALE_STEP_DELAY = 35,
+			SCALE_STOP_ANIMATION_DELAY = 1500,
+			FLIP_INITIAL_DELAY = 250,
+			FLIP_DURATION = 125;
 
 	/**
-	 * Styleable attributes
+	 * Accept & Main start Animation
 	 */
-	private int rearColor;
-	private int acceptImageResource;
+	private Animation checkAnimation =
+			AnimationUtils.loadAnimation(getContext(), R.anim.scale);
+
+	/* CONSTRUCTORS **************************************************/
 
 	public FlipView(Context context) {
 		super(context);
@@ -90,26 +104,191 @@ public class FlipView extends ViewFlipper {
 		init(attrs);
 	}
 
+	/**
+	 * Already part of the extended classes:
+	 * <ul>
+	 * <li>ViewAnimator_inAnimation - Identifier for the animation to use when a view is shown.</li>
+	 * <li>ViewAnimator_outAnimation - Identifier for the animation to use when a view is hidden.</li>
+	 * <li>ViewAnimator_animateFirstView - Defines whether to animate the current View when the ViewAnimation is first displayed.</li>
+	 * <li>ViewFlipper_flipInterval - Time before next animation.</li>
+	 * <li>ViewFlipper_autoStart - When true, automatically start animating.</li>
+	 * </ul>
+	 *
+	 * @param attrs The view's attributes.
+	 */
 	private void init(AttributeSet attrs) {
 		//Necessary for SVG rendering
-		setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+		//setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 		//Read and apply provided attributes
 		TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.FlipView, 0, 0);
 
+		//Init all animations
+		long duration = a.getInteger(R.styleable.FlipView_flipAnimationDuration, FLIP_DURATION);
+		initInAnimation(duration);
+		initOutAnimation(duration);
+		duration = a.getInteger(R.styleable.FlipView_startLayoutAnimationDuration, SCALE_DURATION);
+		setLayoutAnimationController(a.getResourceId(R.styleable.FlipView_startLayoutAnimation, R.anim.layout_animation));
+		setLayoutAnimationDuration(duration);
 
-		a.getResourceId(R.styleable.FlipView_frontLayout, 0);
-		a.getResourceId(R.styleable.FlipView_rearLayout, 0);
+		//FrontView
+		int frontLayout = a.getResourceId(R.styleable.FlipView_frontLayout, R.layout.flipview_front);
+		Drawable frontBackground = a.getDrawable(R.styleable.FlipView_frontBackground);
+		int frontBackgroundColor = a.getColor(R.styleable.FlipView_frontBackgroundColor, Color.GRAY);
+		int frontImage = a.getResourceId(R.styleable.FlipView_frontImage, 0);
+		setFrontLayout(frontLayout);
 
-//		addView(LayoutInflater.from(getContext()).inflate(R.layout.flipview_front, this, false), FRONT_VIEW_INDEX);
-//		addView(LayoutInflater.from(getContext()).inflate(R.layout.flipview_rear, this, false), REAR_VIEW_INDEX);
-//		setRearColorResource(a.getResourceId(R.styleable.FlipView_rearColor, 0));
-//		setAcceptImageResource(a.getResourceId(R.styleable.FlipView_rearAcceptImage, 0));
+		//RearView
+		int rearLayout = a.getResourceId(R.styleable.FlipView_rearLayout, R.layout.flipview_rear);
+		Drawable rearBackground = a.getDrawable(R.styleable.FlipView_rearBackground);
+		int rearBackgroundColor = a.getColor(R.styleable.FlipView_rearBackgroundColor, Color.DKGRAY);
+		int rearImage = a.getResourceId(R.styleable.FlipView_rearImage, 0);
+		setRearLayout(rearLayout);
+
+		a.recycle();
+
 	}
 
+	/* LISTENER ****************************************************/
 
 	public void setOnFlippingListener(OnFlippingListener listener) {
 		this.mFlippingListener = listener;
+	}
+
+	/* ANIMATIONS ***********************************************************/
+
+	private void initInAnimation(long duration) {
+		if (getInAnimation() == null)
+			setInAnimation(getContext(), R.anim.grow_from_middle);
+		getInAnimation().setDuration(duration);
+	}
+
+	private void initOutAnimation(long duration) {
+		if (getOutAnimation() == null)
+			setOutAnimation(getContext(), R.anim.shrink_to_middle);
+		getOutAnimation().setDuration(duration);
+	}
+
+	/**
+	 * Set the duration of the state change animation.
+	 *
+	 * @param duration The flip animation duration in milliseconds.
+	 */
+	public void setFlipAnimationDuration(long duration) {
+		initInAnimation(duration);
+		initOutAnimation(duration);
+	}
+
+	/**
+	 * Get the duration of the state change animation.
+	 *
+	 * @return The animation duration in milliseconds.
+	 */
+	public long getFlipAnimationDuration() {
+		return getInAnimation().getDuration();
+	}
+
+	@Override
+	public LayoutAnimationController getLayoutAnimation() {
+		return super.getLayoutAnimation();
+	}
+
+	public void setLayoutAnimationController(int layoutAnimationControllerResId) {
+		LayoutAnimationController layoutAnimationController =
+				AnimationUtils.loadLayoutAnimation(getContext(),
+				layoutAnimationControllerResId > 0 ? layoutAnimationControllerResId : R.anim.layout_animation);
+		super.setLayoutAnimation(layoutAnimationController);
+	}
+
+	public void setLayoutAnimationDuration(long duration) {
+		getLayoutAnimation().getAnimation().setDuration(duration);
+	}
+
+	public Animation getCheckAnimation() {
+		return checkAnimation;
+	}
+
+	public void setCheckAnimation(int checkedAnimationResId) {
+		setCheckAnimation(AnimationUtils.loadAnimation(getContext(),
+				checkedAnimationResId > 0 ? checkedAnimationResId : R.anim.scale));
+	}
+
+	public void setCheckAnimation(Animation acceptAnimation) {
+		this.checkAnimation = acceptAnimation;
+	}
+
+	/* LAYOUT AND VIEWS **************************************************/
+
+	/**
+	 * Get the View being displayed on the <i>front</i>. The front view is
+	 * displayed when the component is in state "not checked".
+	 *
+	 * @return The <i>front</i> view.
+	 */
+	public View getFrontLayout() {
+		return getChildAt(FRONT_VIEW_INDEX);
+	}
+
+	/**
+	 * Set the front view to be displayed when this component is in state <i>not checked</i>.
+	 * If an invalid resource or {@link #DEFAULT_RESOURCE} is
+	 * passed, then the default view will be applied.
+	 *
+	 * @param layoutResId The layout resource identifier.
+	 */
+	public void setFrontLayout(int layoutResId) {
+		setFrontLayout(LayoutInflater.from(getContext()).inflate(layoutResId, this, false));
+	}
+
+	/**
+	 * Set the front view to be displayed when this component is in state <i>not checked</i>.
+	 * The provided <i>view</i> must not be {@code null}, or
+	 * an IllegalArgumentException will be thrown.
+	 *
+	 * @param view The view. Must not be {@code null}.
+	 */
+	public void setFrontLayout(@NonNull View view) {
+		setView(view, FRONT_VIEW_INDEX);
+	}
+
+	/**
+	 * Get the View being displayed on the <i>rear</i>. The rear view is
+	 * displayed when the component is in state "checked".
+	 *
+	 * @return The <i>rear</i> view.
+	 */
+	public View getRearLayout() {
+		return getChildAt(REAR_VIEW_INDEX);
+	}
+
+	/**
+	 * Set the rear view to be displayed when this component is in state <i>checked</i>.
+	 * If an invalid resource or {@link #DEFAULT_RESOURCE} is
+	 * passed, then the default view will be applied.
+	 *
+	 * @param layoutResId The layout resource identifier.
+	 */
+	public void setRearLayout(int layoutResId) {
+		setRearLayout(LayoutInflater.from(getContext()).inflate(layoutResId, this, false));
+	}
+
+	/**
+	 * Set the rear view to be displayed when this component is in state <i>checked</i>.
+	 * The provided <i>view</i> must not be {@code null}, or
+	 * an IllegalArgumentException will be thrown.
+	 *
+	 * @param view The view. Must not be {@code null}.
+	 */
+	public void setRearLayout(@NonNull View view) {
+		setView(view, REAR_VIEW_INDEX);
+	}
+
+	private void setView(View view, int index) {
+		if (view == null)
+			throw new IllegalArgumentException("The provided view must not be null");
+
+		super.removeViewAt(index);
+		super.addView(view, index, super.generateDefaultLayoutParams());
 	}
 
 }
