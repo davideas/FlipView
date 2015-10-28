@@ -13,4 +13,10 @@
 	tools:showIn="@layout/activity_main"
 	tools:context="eu.davidea.flipview.MainActivity">
 
+	<eu.davidea.flipview.FlipView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		app:checked="false"/>
+
 </RelativeLayout>

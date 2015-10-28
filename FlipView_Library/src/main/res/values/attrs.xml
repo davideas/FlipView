@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<!-- FlipCheckBox attributes -->
+	<!-- FlipView attributes -->
 	<declare-styleable name="FlipView">
 		<!-- Whether or not this component is checked at startup (default: false) -->
 		<attr name="checked" format="boolean" />
+		<!-- Whether or not the initial animation should start at the beginning (default: false) -->
+		<attr name="enableInitialAnimation" format="boolean" />
 		<!-- Set the flip animation duration (default: 125ms) -->
 		<attr name="flipAnimationDuration" format="integer" />
-		<!-- Set the starting animation duration (default: scale) -->
-		<attr name="startLayoutAnimation" format="reference" />
+		<!-- Set the starting animation duration (default: scale_in) -->
+		<attr name="initialLayoutAnimation" format="reference" />
 		<!-- Set the starting animation duration (default: 300ms) -->
-		<attr name="startLayoutAnimationDuration" format="integer" />
+		<attr name="initialLayoutAnimationDuration" format="integer" />
 
 		<!-- Front view layout resource (for checked state -> false) -->
 		<attr name="frontLayout" format="reference" />
