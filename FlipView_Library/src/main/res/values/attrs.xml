@@ -3,16 +3,20 @@
 
 	<!-- FlipView attributes -->
 	<declare-styleable name="FlipView">
-		<!-- Whether or not this component is checked at startup (default: false) -->
+		<!-- Whether or not this component is flipped at startup (default: false) -->
 		<attr name="checked" format="boolean" />
+		<!-- If flip animation is enabled (default: true) -->
+		<attr name="checkable" format="boolean" />
 		<!-- Whether or not the initial animation should start at the beginning (default: false) -->
 		<attr name="enableInitialAnimation" format="boolean" />
 		<!-- Set the flip animation duration (default: 125ms) -->
 		<attr name="flipAnimationDuration" format="integer" />
 		<!-- Set the starting animation duration (default: scale_in) -->
 		<attr name="initialLayoutAnimation" format="reference" />
-		<!-- Set the starting animation duration (default: 300ms) -->
+		<!-- Set the starting animation duration (default: 250ms) -->
 		<attr name="initialLayoutAnimationDuration" format="integer" />
+		<!-- Disable inner clickListener -->
+		<attr name="disableClickListener" format="boolean" />
 
 		<!-- Front view layout resource (for checked state -> false) -->
 		<attr name="frontLayout" format="reference" />
@@ -22,6 +26,8 @@
 		<attr name="frontBackgroundColor" format="color" />
 		<!-- Front image resource -->
 		<attr name="frontImage" format="reference" />
+		<!-- Front image padding -->
+		<attr name="frontImagePadding" format="dimension" />
 
 		<!-- Rear view layout resource (for checked state -> true) -->
 		<attr name="rearLayout" format="reference" />
@@ -31,6 +37,8 @@
 		<attr name="rearBackgroundColor" format="color" />
 		<!-- Rear accept image resource -->
 		<attr name="rearImage" format="reference" />
+		<!-- Rear image padding -->
+		<attr name="rearImagePadding" format="dimension" />
 	</declare-styleable>
 
 </resources>
