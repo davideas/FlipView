@@ -2,12 +2,14 @@
 <FrameLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="40dp"
-	android:layout_height="40dp">
+	android:layout_height="40dp"
+	android:elevation="2dp">
 
 	<ImageView
 		android:id="@+id/imageview_front"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
+		android:elevation="4dp"
 		android:layout_gravity="center"
 		android:contentDescription="@null"
 		android:gravity="center_horizontal"/>

@@ -1,4 +1,4 @@
-package eu.davidea.flipview;
+package eu.davidea.flipviewexample;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
