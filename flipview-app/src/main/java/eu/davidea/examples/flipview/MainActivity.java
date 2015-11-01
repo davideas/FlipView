@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import eu.davidea.flipview.FlipView;
-import eu.davidea.examples.utils.Utils;
+import eu.davidea.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
