@@ -77,8 +77,6 @@
 			android:id="@+id/flip_horizontal_oval_view_big_precision"
 			android:layout_width="52dp"
 			android:layout_height="52dp"
-			android:layout_marginRight="@dimen/activity_horizontal_margin"
-			android:layout_marginEnd="@dimen/activity_horizontal_margin"
 			android:layout_gravity="center_horizontal"
 			android:clickable="true"
 			app:checked="false"
