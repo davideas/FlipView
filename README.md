@@ -25,8 +25,8 @@ Please, refer to those attributes documentation for more details.
 - Custom rear ImageView animation.
 - Properties customizable at design time and at run time.
 
-# Screenshots & Video
-(coming soon)
+# Showcase
+![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
 
 #Setup
 Import the library into your project using Gradle with JCenter
@@ -91,6 +91,7 @@ Supported attributes with default values:
 - `DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load.
 - `SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
 - `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
+
 # Change Log
 ###### v1.0.0 - 2015.11.01 (Initial release)
 - Initial LayoutAnimation & Initial LayoutAnimationDuration
