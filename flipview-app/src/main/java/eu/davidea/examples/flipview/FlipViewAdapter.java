@@ -1,4 +1,4 @@
-package eu.davidea.flipviewexample;
+package eu.davidea.examples.flipview;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;

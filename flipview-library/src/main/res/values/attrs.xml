@@ -7,7 +7,7 @@
 		<attr name="checked" format="boolean" />
 		<!-- Set the main animation duration (default: 100ms) -->
 		<attr name="animationDuration" format="integer" />
-		<!-- Anticipate the beginning of the InAnimation  (default: 0ms) -->
+		<!-- Anticipate the beginning of the InAnimation (default: 0ms) -->
 		<attr name="anticipateInAnimationTime" format="integer" />
 		<!-- If main animation should be applied only to the child views from design layout
 		     or using inner layout (default: false, use inner layout) -->
@@ -18,7 +18,7 @@
 		<attr name="initialLayoutAnimation" format="reference" />
 		<!-- Set the starting animation duration (default: 250ms) -->
 		<attr name="initialLayoutAnimationDuration" format="integer" />
-		<!-- User rear default rear image animation (default: true) -->
+		<!-- Use default rear image animation (default: true) -->
 		<attr name="animateRearImage" format="boolean" />
 
 		<!-- Front view layout resource (for checked state -> false) -->

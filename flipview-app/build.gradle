@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+	compileSdkVersion targetSdk
+	buildToolsVersion buildTools
+
+	defaultConfig {
+		applicationId "eu.davidea.examples.flipview"
+		minSdkVersion minSdk
+		targetSdkVersion targetSdk
+		versionCode versionCode
+		versionName libraryVersion + libraryDate
+	}
+	buildTypes {
+		release {
+			minifyEnabled false
+			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+		}
+	}
+}
+
+dependencies {
+	//See main build.gradle for values & versions
+	compile project (':flipview-library')
+	compile (supportDependencies.appcompat) {
+		transitive = true;
+	}
+	compile supportDependencies.recyclerview
+	compile supportDependencies.design
+
+}

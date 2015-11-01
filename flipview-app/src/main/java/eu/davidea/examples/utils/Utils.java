@@ -1,4 +1,4 @@
-package eu.davidea.flipviewexample.utils;
+package eu.davidea.examples.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

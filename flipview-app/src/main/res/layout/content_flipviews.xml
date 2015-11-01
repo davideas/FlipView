@@ -20,12 +20,11 @@
 		android:layout_gravity="center_horizontal"
 		android:orientation="horizontal">
 
-		<!-- GMail like FlipView!
-			- Clickable
+		<!-- FlipView like GMail!
 			- Inner default initial animation (scale up)
 			- Default in/out animation (flip on Y axis: shrink and grow on X axis) on click
-			- Front & rear custom layout (using of elevation attribute)
-			- Front & rear custom background and color
+			- Front & rear custom layout (usage of elevation attribute)
+			- Front & rear custom background color
 			- Default rear image animation (scale up)
 			- Default rear image animation duration (150ms)
 		-->
@@ -45,11 +44,10 @@
 			app:rearLayout="@layout/flipview_rear_custom"
 			app:rearBackgroundColor="#49814B"/>
 
-		<!-- GMail like FlipView with Text!
-			- Clickable
+		<!-- FlipView like GMail with Text!
 			- Inner default initial animation (scale up)
 			- Default in/out animation (flip on Y axis: shrink and grow on X axis) on click
-			- Front & rear custom layout (usage of elevation attribute and textView)
+			- Front & rear custom layout (usage of elevation attribute and a TextView)
 			- Front & rear custom background and color
 			- Default rear image animation (scale up)
 			- Default rear image animation duration (150ms)
@@ -71,14 +69,9 @@
 			app:rearBackgroundColor="#49814B"
 			app:rearImageAnimation="@anim/grow_from_start_x_axis"/>
 
-		<!-- GMail like FlipView!
-			- Clickable
-			- Inner default initial animation (scale up)
-			- Default in/out animation (flip on Y axis: shrink and grow on X axis) on click
-			- Front & rear custom layout (using of elevation attribute)
-			- Front & rear custom background and color
-			- Default rear image animation (scale up)
-			- Default rear image animation duration (150ms)
+		<!-- As "@+id/flip_horizontal_oval_view_big"
+			but with high duration to see the precision
+			of the animations.
 		-->
 		<eu.davidea.flipview.FlipView
 			android:id="@+id/flip_horizontal_oval_view_big_precision"
@@ -109,12 +102,12 @@
 		android:orientation="horizontal">
 
 		<!--
-			- Clickable
 			- Default initial animation & animation duration (scale up)
 			- Default layout (no elevation)
 			- Custom in/out animation (scale down front layout and scale up rear layout) on click
-			- Custom In/out animation duration = 300ms
-			- Front custom background color with no image
+			- Custom In/out animation duration = 200ms
+			- Front custom background color
+			- Default rear image and background
 		-->
 		<eu.davidea.flipview.FlipView
 			android:id="@+id/scale_oval_view"
@@ -133,10 +126,8 @@
 			app:rearImageAnimationDuration="200"/>
 
 		<!--
-			- Clickable
 			- Custom initial animation & animation duration (fade)
 			- Custom in/out animation (flip on X axis: shrink and grow on Y axis) on click
-			- In/out animation duration increased to 500ms
 			- Default layout (no elevation)
 			- Front custom background color
 			- Custom rear image padding
@@ -163,15 +154,13 @@
 			app:rearImageAnimationDuration="200"/>
 
 		<!--
-			- Clickable
 			- Custom initial animation & animation duration (fade)
-			- Custom in/out animation (flip on X axis: shrink and grow on Y axis) on click
-			- In/out animation duration increased to 500ms
+			- Anticipate entry InAnimation (don't wait too much, adjust the fade effect)
+			- Custom in/out animation (fade) on click
+			- In/out animation duration increased to 200ms
 			- Default layout (no elevation)
-			- Front custom background color
-			- Custom rear image padding
-			- Default rear image animation (scale up)
-			- Custom rear image animation duration (200ms)
+			- Front & rear custom background color
+			- Disable rear image animation (doesn't scale up)
 		-->
 		<eu.davidea.flipview.FlipView
 			android:id="@+id/fade_oval_view2"
@@ -192,13 +181,13 @@
 			app:frontImage="@drawable/ic_favorite_outline_white_24dp"
 			app:rearBackgroundColor="@android:color/holo_red_dark"
 			app:rearImage="@drawable/ic_favorite_white_24dp"
-			app:rearImageAnimationDuration="200"
 			app:animateRearImage="false"/>
 
 		<!--
 			- Not clickable!
-			- Not checked (by default), optionally you can lock the checked status by setting true
-			- Inner default initial animation (scale up)
+			- Not checked (by default), optionally you can lock the checked
+			  status by setting true
+			- Don't animate initially!
 			- Front custom layout with elevation
 			- Front custom background drawable with stroke
 		-->
@@ -207,7 +196,6 @@
 			android:layout_width="40dp"
 			android:layout_height="40dp"
 			android:clickable="false"
-			app:enableInitialAnimation="true"
 			app:frontLayout="@layout/flipview_front_custom"
 			app:frontBackground="@drawable/circle_light_stroke"
 			app:frontImage="@drawable/ic_lock_white_24dp"/>
@@ -223,14 +211,14 @@
 		android:orientation="horizontal">
 
 		<!--
-			- Clickable
 			- Start checked (use flipSilently at startup)
 			- Inner default initial animation (scale up)
-			- Custom initial animation duration
+			- Custom initial animation duration increased to 400ms
 			- Custom in/out animation (slide) on click
+			- Main animation duration increased to 500ms
+			- Anticipate entry InAnimation (don't wait too much, adjust the slide effect)
 			- Default layout (no elevation)
 			- Front & rear custom background and color
-			- Custom front image padding
 			- Disable rear image animation (doesn't scale up)
 		-->
 		<eu.davidea.flipview.FlipView
@@ -242,7 +230,7 @@
 			android:inAnimation="@anim/slide_in_from_left"
 			android:outAnimation="@anim/slide_out_to_right"
 			android:clickable="true"
-			app:checked="false"
+			app:checked="true"
 			app:enableInitialAnimation="true"
 			app:initialLayoutAnimationDuration="400"
 			app:animationDuration="500"
@@ -250,11 +238,17 @@
 			app:frontBackground="@drawable/square_light"
 			app:frontBackgroundColor="@color/colorPrimary"
 			app:frontImage="@drawable/ic_exit_to_app_white_24dp"
-			app:frontImagePadding="2dp"
 			app:rearBackground="@drawable/square_light"
 			app:rearBackgroundColor="@color/colorPrimary"
 			app:animateRearImage="false"/>
 
+		<!--
+			- Animate Design Layout Only (don't use Layout and Drawables from library)
+			  This behaviour cannot be changed at runtime.
+			  This FlipView flips the 2 ImageViews only.
+			- Inner default initial animation (scale up)
+			- Custom in/out animation (flip vertically) on click
+		-->
 		<eu.davidea.flipview.FlipView
 			android:id="@+id/flip_vertical_view_custom"
 			android:layout_width="40dp"
@@ -264,7 +258,6 @@
 			android:clickable="true"
 			android:inAnimation="@anim/grow_from_middle_y_axis"
 			android:outAnimation="@anim/shrink_to_middle_y_axis"
-			app:checked="true"
 			app:enableInitialAnimation="true"
 			app:animateDesignLayoutOnly="true">
 
@@ -287,12 +280,13 @@
 		</eu.davidea.flipview.FlipView>
 
 		<!--
-			- Clickable
-			- Render and animate only child views in Series (one after another) from
-			  this layout (inner layout and images are not added)
+			- Animate Design Layout Only (don't use Layout and Drawables from library)
+			  Render and animate only child views in Series (one after another) from
+			  this layout.
 			  This behaviour cannot be changed at runtime.
+			  This FlipView flips all ImageViews in series, background remains static.
 			- Default in/out animation (flip)
-			- Use of android background attribute for a custom drawable
+>			- Use of android background attribute for a custom drawable
 		-->
 		<eu.davidea.flipview.FlipView
 			android:id="@+id/flip_horizontal_flip_child_views"

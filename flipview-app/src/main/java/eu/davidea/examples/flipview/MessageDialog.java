@@ -1,4 +1,4 @@
-package eu.davidea.flipviewexample;
+package eu.davidea.examples.flipview;
 
 import android.annotation.SuppressLint;
 import android.app.DialogFragment;
@@ -58,9 +58,7 @@ public class MessageDialog extends DialogFragment {
 					}
 				});
 		
-		final AlertDialog dialog = builder.create();
-		
-		return dialog;
+		return builder.create();
 	}
 	
 }

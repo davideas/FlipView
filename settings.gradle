@@ -1,1 +1,1 @@
-include ':FlipView_App', ':FlipView_Library'
+include ':flipview-app', ':flipview-library'

@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+	This Layout explains the usage of the FlipView in a RecyclerView.
+	Here you can see better the idea of the Initial Animation and the Step Delay.
+	In order to start correctly this effect a Reset of the delay must be
+	called programmatically (see resetLayoutAnimationDelay()).
+	Also, the item used, includes a TextView: you can set a custom text to it in the
+	Adapter, in this example, the text is the position from 1 to 15.
+-->
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"

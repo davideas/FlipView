@@ -44,52 +44,55 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 /**
- * FlipView is a ViewGroup (FrameLayout) that displays 2 views/layouts by flipping
+ * FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
  * the front one in favor of the back one, and vice versa. Optionally more views can be
  * displayed in series one after another since it extends {@link android.widget.ViewAnimator}.
- * <p/>
+ * <br/><br/>
  * Usage is very simple. You just need to add this View to any layout (like you would
  * do with any other View) and you customize the behaviours by assigning values to the
  * optional properties in the layout or programmatically.<br/>
  * Please, refer to those attributes documentation for more details.
- * <p/>
- * The Views to flip can be many <b>ViewGroups</b> containing an ImageView/TextView or simply more
- * <b>Views</b> (preferable ImageView) or even a combination of these types.
+ *
  * <ul>
- * <li>In case of <b>ViewGroups</b> with an ImageView each, (if present) background drawable
+ * <li>The Views to flip can be many <b>ViewGroups</b> containing an ImageView/TextView or simply more
+ * <b>Views</b> (preferable ImageView) or even a combination of these types.<br/><br/>
+ * - In case of <b>ViewGroups</b> with an ImageView each, (if present) background drawable
  * and color are assigned to those ViewGroups and the image resources to those ImageViews.
  * In this case the entire ViewGroups (containing the ImageViews) will flip.<br/>
  * Choosing this option, when 2 ViewGroups are configured, a second animation is executed
  * on the rear ImageView after the first flip is consumed.<br/>
- * <b>Note: </b>the library contains already the checked Drawable for the rear image!</li>
- * <li>In case of <b>Views</b>, (if present) background drawable and color are assigned
+ * <b>Note: </b>the library contains already the checked Drawable for the rear image!<br/><br/>
+ * - In case of <b>Views</b>, (if present) background drawable and color are assigned
  * to the main ViewGroup (the FlipView) and only the simple views will be shown in series.<br/>
- * Choosing this option, no further animation will be performed on the rear Views.</li>
- * </ul>
- * <p/>
- * Optionally, this FlipView supports a {@link PictureDrawable} for SVG loading and assignment
- * for <i>front View Only</i>. Remember to change the LayerType to {@link View#LAYER_TYPE_SOFTWARE}.
- * <p/>
- * Not less this FlipView can born already flipped but also flip animation can be disabled
- * but only at design time.
- * <p/>
- * If the custom layout included a TextVIew instead of ImageView as first child, custom text can
+ * Choosing this option, no further animation will be performed on the rear Views.<br/><br/></li>
+ *
+ * <li>Optionally, this FlipView supports a {@link PictureDrawable} for SVG loading
+ * and assignment <i>front View Only</i>. Remember to change the LayerType to
+ * {@link View#LAYER_TYPE_SOFTWARE}.<br/><br/></li>
+ *
+ * <li>Not less this FlipView can born already flipped but also flip animation can be disabled
+ * but only at design time.<br/><br/></li>
+ *
+ * <li>If the custom layout included a TextVIew instead of ImageView as first child, custom text can
  * be displayed. Having such TextView you can assign any text and style for the front View.
- * <p/>
- * Another functionality is to assign to the entire FlipView itself, an <b>initial animation</b>
+ * <br/><br/></li>
+ *
+ * <li>Another functionality is to assign to the entire FlipView itself, an <b>initial animation</b>
  * (by default it's a Scale animation and not enabled) in order to reach different combinations
  * of effects:<br/>
  * For instance, having multiples FlipViews on the screen, this animation can be prepared for
  * simultaneous entry effect (all FlipViews will perform the animation at the same time) or
  * for a delayed entry effect (all FlipViews will perform the animation with step delay).
- * <p/>
+ * <br/><br/></li>
+ *
+ * </ul>
  * Finally, when the View is clicked, it will switch its state. The event is
  * propagated with the listener {@link OnFlippingListener#onFlipped(FlipView, boolean)}.
  * You can subscribe to that listener using {@link #setOnFlippingListener(OnFlippingListener)}
  * method.
  *
  * @author Davide Steduto
- * @since 25/10/2015
+ * @since 01/11/2015
  */
 //@SuppressWarnings("unused")
 public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.OnClickListener {

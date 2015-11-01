@@ -1,4 +1,4 @@
-package eu.davidea.flipviewexample;
+package eu.davidea.examples.flipview;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -15,7 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 
 import eu.davidea.flipview.FlipView;
-import eu.davidea.flipviewexample.utils.Utils;
+import eu.davidea.examples.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
