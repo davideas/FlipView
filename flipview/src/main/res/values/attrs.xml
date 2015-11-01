@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- FlipView attributes -->
+	<declare-styleable name="FlipView">
+		<!-- Whether or not this component is flipped at startup (default: false) -->
+		<attr name="checked" format="boolean" />
+		<!-- Set the main animation duration (default: 100ms) -->
+		<attr name="animationDuration" format="integer" />
+		<!-- Anticipate the beginning of the InAnimation (default: 0ms) -->
+		<attr name="anticipateInAnimationTime" format="integer" />
+		<!-- If main animation should be applied only to the child views from design layout
+		     or using inner layout (default: false, use inner layout) -->
+		<attr name="animateDesignLayoutOnly" format="boolean" />
+		<!-- Whether or not the initial animation should start at the beginning (default: false) -->
+		<attr name="enableInitialAnimation" format="boolean" />
+		<!-- Set the starting animation (default: scale_up) -->
+		<attr name="initialLayoutAnimation" format="reference" />
+		<!-- Set the starting animation duration (default: 250ms) -->
+		<attr name="initialLayoutAnimationDuration" format="integer" />
+		<!-- Use default rear image animation (default: true) -->
+		<attr name="animateRearImage" format="boolean" />
+
+		<!-- Front view layout resource (for checked state -> false) -->
+		<attr name="frontLayout" format="reference" />
+		<!-- Front drawable resource (for checked state -> false) -->
+		<attr name="frontBackground" format="reference" />
+		<!-- Front view color resource (for checked state -> false) -->
+		<attr name="frontBackgroundColor" format="color" />
+		<!-- Front image resource -->
+		<attr name="frontImage" format="reference" />
+		<!-- Front image padding -->
+		<attr name="frontImagePadding" format="dimension" />
+
+		<!-- Rear view layout resource (for checked state -> true) -->
+		<attr name="rearLayout" format="reference" />
+		<!-- Rear drawable resource (for checked state -> true) -->
+		<attr name="rearBackground" format="reference" />
+		<!-- Rear view color resource (for checked state -> true) -->
+		<attr name="rearBackgroundColor" format="color" />
+		<!-- Rear accept image resource -->
+		<attr name="rearImage" format="reference" />
+		<!-- Rear image padding -->
+		<attr name="rearImagePadding" format="dimension" />
+		<!-- Override the default rear image animation (default: scale_up) -->
+		<attr name="rearImageAnimation" format="reference" />
+		<!-- Set the rear image animation duration (default: 150ms) -->
+		<attr name="rearImageAnimationDuration" format="integer" />
+
+	</declare-styleable>
+
+</resources>
