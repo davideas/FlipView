@@ -5,8 +5,13 @@
 	<declare-styleable name="FlipView">
 		<!-- Whether or not this component is flipped at startup (default: false) -->
 		<attr name="checked" format="boolean" />
-		<!-- Set the flip animation duration (default: 100ms) -->
-		<attr name="flipAnimationDuration" format="integer" />
+		<!-- Set the main animation duration (default: 100ms) -->
+		<attr name="animationDuration" format="integer" />
+		<!-- Anticipate the beginning of the InAnimation  (default: 0ms) -->
+		<attr name="anticipateInAnimationTime" format="integer" />
+		<!-- If main animation should be applied only to the child views from design layout
+		     or using inner layout (default: false, use inner layout) -->
+		<attr name="animateDesignLayoutOnly" format="boolean" />
 		<!-- Whether or not the initial animation should start at the beginning (default: false) -->
 		<attr name="enableInitialAnimation" format="boolean" />
 		<!-- Set the starting animation (default: scale_up) -->
@@ -15,8 +20,6 @@
 		<attr name="initialLayoutAnimationDuration" format="integer" />
 		<!-- User rear default rear image animation (default: true) -->
 		<attr name="animateRearImage" format="boolean" />
-		<!-- Override the default rear image animation (default: scale_up) -->
-		<attr name="rearImageAnimation" format="reference" />
 
 		<!-- Front view layout resource (for checked state -> false) -->
 		<attr name="frontLayout" format="reference" />
@@ -39,7 +42,9 @@
 		<attr name="rearImage" format="reference" />
 		<!-- Rear image padding -->
 		<attr name="rearImagePadding" format="dimension" />
-		<!-- Set the rear image animation duration (default: 100ms) -->
+		<!-- Override the default rear image animation (default: scale_up) -->
+		<attr name="rearImageAnimation" format="reference" />
+		<!-- Set the rear image animation duration (default: 150ms) -->
 		<attr name="rearImageAnimationDuration" format="integer" />
 
 	</declare-styleable>

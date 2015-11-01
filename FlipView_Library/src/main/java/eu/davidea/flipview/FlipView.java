@@ -40,6 +40,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 /**
@@ -48,21 +49,21 @@ import android.widget.ViewFlipper;
  * displayed in series one after another since it extends {@link android.widget.ViewAnimator}.
  * <p/>
  * Usage is very simple. You just need to add this View to any layout (like you would
- * do with any other View) and you are good to go. You can customize the behaviours
- * by assigning values to the optional properties in the layout or programmatically.<br/>
+ * do with any other View) and you customize the behaviours by assigning values to the
+ * optional properties in the layout or programmatically.<br/>
  * Please, refer to those attributes documentation for more details.
  * <p/>
- * The Views to flip can be more <b>ViewGroups</b> containing an ImageView or simply more
- * <b>Views</b> (preferable ImageView) or even a combination of the 2 types.
+ * The Views to flip can be many <b>ViewGroups</b> containing an ImageView/TextView or simply more
+ * <b>Views</b> (preferable ImageView) or even a combination of these types.
  * <ul>
  * <li>In case of <b>ViewGroups</b> with an ImageView each, (if present) background drawable
  * and color are assigned to those ViewGroups and the image resources to those ImageViews.
  * In this case the entire ViewGroups (containing the ImageViews) will flip.<br/>
- * Choosing this option, when 2 ViewGroups are configured, a second rearImageAnimation will be
- * assigned and executed on the rear ImageView after the first flip is consumed.<br/>
- * <b>Note: </b>the library contains already the checked ImageView for the rear image!</li>
+ * Choosing this option, when 2 ViewGroups are configured, a second animation is executed
+ * on the rear ImageView after the first flip is consumed.<br/>
+ * <b>Note: </b>the library contains already the checked Drawable for the rear image!</li>
  * <li>In case of <b>Views</b>, (if present) background drawable and color are assigned
- * to this ViewGroup (FlipView) and only the simple views will flip.<br/>
+ * to the main ViewGroup (the FlipView) and only the simple views will be shown in series.<br/>
  * Choosing this option, no further animation will be performed on the rear Views.</li>
  * </ul>
  * <p/>
@@ -72,8 +73,11 @@ import android.widget.ViewFlipper;
  * Not less this FlipView can born already flipped but also flip animation can be disabled
  * but only at design time.
  * <p/>
+ * If the custom layout included a TextVIew instead of ImageView as first child, custom text can
+ * be displayed. Having such TextView you can assign any text and style for the front View.
+ * <p/>
  * Another functionality is to assign to the entire FlipView itself, an <b>initial animation</b>
- * (by default is a Scale animation and not used) in order to reach different combinations
+ * (by default it's a Scale animation and not enabled) in order to reach different combinations
  * of effects:<br/>
  * For instance, having multiples FlipViews on the screen, this animation can be prepared for
  * simultaneous entry effect (all FlipViews will perform the animation at the same time) or
@@ -126,13 +130,18 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	public static final int DEFAULT_RESOURCE = 0;
 
 	/**
-	 * Reference to the ImageView of the FrontLayout
+	 * Reference to the TextView of the FrontLayout if exists
+	 */
+	private TextView frontText;
+
+	/**
+	 * Reference to the ImageView of the FrontLayout if exists
 	 */
 	private ImageView frontImage;
 	private int frontImagePadding;
 
 	/**
-	 * Reference to the ImageView of the RearLayout
+	 * Reference to the ImageView of the RearLayout if exists
 	 */
 	private ImageView rearImage;
 	private int rearImagePadding;
@@ -145,7 +154,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Animations attributes
 	 */
-	private boolean mChecked;
+	private boolean checked;
 	private static boolean enableInitialAnimation = true;
 
 	private Animation initialLayoutAnimation;
@@ -157,12 +166,15 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			FLIP_INITIAL_DELAY = 250,
 			FLIP_DURATION = 100,
 			INITIAL_ANIMATION_DURATION = 250,
-			REAR_IMAGE_ANIMATION_DURATION = 125;
-	private long initialLayoutAnimationDuration, rearImageAnimationDuration;
+			REAR_IMAGE_ANIMATION_DURATION = 150;
+	private long initialLayoutAnimationDuration,
+			rearImageAnimationDuration,
+			anticipateInAnimationTime;
 	static long initialDelay = DEFAULT_INITIAL_DELAY;
 
-
-	/* CONSTRUCTORS **************************************************/
+	//****************
+	// CONSTRUCTORS **
+	//****************
 
 	public FlipView(Context context) {
 		super(context);
@@ -194,54 +206,55 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.FlipView, 0, 0);
 
 		//Flags
-		mChecked = a.getBoolean(R.styleable.FlipView_checked, false);
+		checked = a.getBoolean(R.styleable.FlipView_checked, false);
 		enableInitialAnimation = a.getBoolean(R.styleable.FlipView_enableInitialAnimation, false);
+		boolean animateDesignChildViewsOnly = a.getBoolean(R.styleable.FlipView_animateDesignLayoutOnly, false);
 
 		//FrontView
-//		if (getChildCount() < 1) {
+		if (!animateDesignChildViewsOnly) {
 			int frontLayout = a.getResourceId(R.styleable.FlipView_frontLayout, R.layout.flipview_front);
 			Drawable frontBackground = a.getDrawable(R.styleable.FlipView_frontBackground);
-			int frontBackgroundColor = a.getColor(R.styleable.FlipView_frontBackgroundColor, Color.GRAY);
+			int frontBackgroundColor = a.getColor(R.styleable.FlipView_frontBackgroundColor, 0);
 			int frontImage = a.getResourceId(R.styleable.FlipView_frontImage, 0);
 			frontImagePadding = (int) a.getDimension(R.styleable.FlipView_frontImagePadding, 0);
 			setFrontLayout(frontLayout);
-			setFrontImage(frontImage);
 			setChildBackgroundDrawable(FRONT_VIEW_INDEX, frontBackground, frontBackgroundColor);
-//		}
-
-		if (isClickable()) {
-//			if (getChildCount() < 2) {
-//				//RearView
-				int rearLayout = a.getResourceId(R.styleable.FlipView_rearLayout, R.layout.flipview_rear);
-				Drawable rearBackground = a.getDrawable(R.styleable.FlipView_rearBackground);
-				int rearBackgroundColor = a.getColor(R.styleable.FlipView_rearBackgroundColor, Color.GRAY);
-				int rearImage = a.getResourceId(R.styleable.FlipView_rearImage, R.drawable.ic_action_done);
-				rearImagePadding = (int) a.getDimension(R.styleable.FlipView_rearImagePadding, 0);
-				addRearLayout(rearLayout);
-				setRearImage(rearImage);
-				setChildBackgroundDrawable(REAR_VIEW_INDEX, rearBackground, rearBackgroundColor);
-//			}
-
-			//Init Flip animations
-			long duration = a.getInteger(R.styleable.FlipView_flipAnimationDuration, FLIP_DURATION);
-			rearImageAnimationDuration = a.getInteger(R.styleable.FlipView_rearImageAnimationDuration, REAR_IMAGE_ANIMATION_DURATION);
-			if (!isInEditMode()) {
-				//This also initialize the in/out animations
-				setFlipAnimationDuration(duration);
-				if (a.getBoolean(R.styleable.FlipView_animateRearImage, true))
-					setRearImageAnimation(a.getInteger(R.styleable.FlipView_rearImageAnimation, 0));
-			}
-
-			//Display rear view at start if requested
-			if (mChecked) flipSilently(true);
-
-			//Apply default OnClickListener
-			setOnClickListener(this);
+			setFrontImage(frontImage);
 		}
+
+
+		if (!animateDesignChildViewsOnly) {
+			//RearView
+			int rearLayout = a.getResourceId(R.styleable.FlipView_rearLayout, R.layout.flipview_rear);
+			Drawable rearBackground = a.getDrawable(R.styleable.FlipView_rearBackground);
+			int rearBackgroundColor = a.getColor(R.styleable.FlipView_rearBackgroundColor, 0);
+			int rearImage = a.getResourceId(R.styleable.FlipView_rearImage, R.drawable.ic_action_done);
+			rearImagePadding = (int) a.getDimension(R.styleable.FlipView_rearImagePadding, 0);
+			addRearLayout(rearLayout);
+			setChildBackgroundDrawable(REAR_VIEW_INDEX, rearBackground, rearBackgroundColor);
+			setRearImage(rearImage);
+		}
+
+		//Init main(Flip) animations
+		long duration = a.getInteger(R.styleable.FlipView_animationDuration, FLIP_DURATION);
+		rearImageAnimationDuration = a.getInteger(R.styleable.FlipView_rearImageAnimationDuration, REAR_IMAGE_ANIMATION_DURATION);
+		anticipateInAnimationTime = a.getInteger(R.styleable.FlipView_anticipateInAnimationTime, 0);
+		if (!isInEditMode()) {
+			//This also initialize the in/out animations
+			setMainAnimationDuration(duration);
+			if (a.getBoolean(R.styleable.FlipView_animateRearImage, true))
+				setRearImageAnimation(a.getResourceId(R.styleable.FlipView_rearImageAnimation, 0));
+		}
+
+		//Display rear view at start if requested
+		if (checked) flipSilently(true);
+
+		//Apply default OnClickListener if clickable
+		if (isClickable()) setOnClickListener(this);
 
 		//Show initial cascade step animation when view is first rendered
 		if (enableInitialAnimation) {
-			long duration = a.getInteger(R.styleable.FlipView_initialLayoutAnimationDuration, INITIAL_ANIMATION_DURATION);
+			duration = a.getInteger(R.styleable.FlipView_initialLayoutAnimationDuration, INITIAL_ANIMATION_DURATION);
 			setInitialLayoutAnimationDuration(duration);
 			setInitialLayoutAnimation(a.getResourceId(R.styleable.FlipView_initialLayoutAnimation, 0));
 
@@ -252,7 +265,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		a.recycle();
 	}
 
-	/* LISTENERS ****************************************************/
+	//*************
+	// LISTENERS **
+	//*************
 
 	public void setOnFlippingListener(OnFlippingListener listener) {
 		this.mFlippingListener = listener;
@@ -263,7 +278,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		flip();
 	}
 
-	/* STATIC METHODS ***********************************************/
+	//******************
+	// STATIC METHODS **
+	//******************
 
 	public static ShapeDrawable createOvalDrawable() {
 		ShapeDrawable shapeDrawable = new ShapeDrawable();
@@ -272,13 +289,13 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	}
 
 	public static Animation createScaleAnimation(long duration) {
-		ScaleAnimation scale_in = new ScaleAnimation(0, 1.0F, 0, 1.0F,
+		ScaleAnimation scale_up = new ScaleAnimation(0, 1.0f, 0, 1.0f,
 				Animation.RELATIVE_TO_SELF, 0.5f,
 				Animation.RELATIVE_TO_SELF, 0.5f);
-		scale_in.setDuration(duration);
-		scale_in.setInterpolator(new DecelerateInterpolator());
-		scale_in.setStartOffset(initialDelay += SCALE_STEP_DELAY);
-		return scale_in;
+		scale_up.setDuration(duration);
+		scale_up.setInterpolator(new DecelerateInterpolator());
+		scale_up.setStartOffset(initialDelay += SCALE_STEP_DELAY);
+		return scale_up;
 	}
 
 	/**
@@ -328,7 +345,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		}, STOP_LAYOUT_ANIMATION_DELAY);
 	}
 
-	/* ANIMATIONS ***************************************************/
+	//**************
+	// ANIMATIONS **
+	//**************
 
 	/*
 	 * Override to always display content in design mode
@@ -347,13 +366,15 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	private void initInAnimation(long duration) {
 		if (getInAnimation() == null)
-			setInAnimation(getContext(), R.anim.grow_from_middle);
+			setInAnimation(getContext(), R.anim.grow_from_middle_x_axis);
 		getInAnimation().setDuration(duration);
+		if (anticipateInAnimationTime > duration) anticipateInAnimationTime = duration;
+		getInAnimation().setStartOffset(duration - anticipateInAnimationTime);
 	}
 
 	private void initOutAnimation(long duration) {
 		if (getOutAnimation() == null)
-			setOutAnimation(getContext(), R.anim.shrink_to_middle);
+			setOutAnimation(getContext(), R.anim.shrink_to_middle_x_axis);
 		getOutAnimation().setDuration(duration);
 	}
 
@@ -370,9 +391,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	public void setInitialLayoutAnimation(int animationResId) {
 		try {
-			this.initialLayoutAnimation = animationResId > 0 ?
+			setInitialLayoutAnimation(animationResId > 0 ?
 					AnimationUtils.loadAnimation(getContext(), animationResId) :
-							createScaleAnimation(initialLayoutAnimationDuration);
+							createScaleAnimation(initialLayoutAnimationDuration));
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Initial animation with id " + animationResId + " could not be found. Initial animation cannot be set!");
 		}
@@ -394,17 +415,18 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	public void setRearImageAnimation(int animationResId) {
 		try {
-			this.rearImageAnimation = AnimationUtils.loadAnimation(getContext(),
-					animationResId > 0 ? animationResId : R.anim.scale_up);
+			setRearImageAnimation(AnimationUtils.loadAnimation(getContext(),
+					animationResId > 0 ? animationResId : R.anim.scale_up));
 			if (DEBUG) Log.d(TAG, "Rear animation is active!");
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Rear animation with id " + animationResId + " could not be found. Rear animation cannot be set!");
 		}
 	}
 
-	public void setRearImageAnimation(Animation acceptAnimation) {
-		acceptAnimation.setDuration(rearImageAnimationDuration);
-		this.rearImageAnimation = acceptAnimation;
+	public void setRearImageAnimation(Animation rearAnimation) {
+		this.rearImageAnimation = rearAnimation;
+		if (rearImageAnimationDuration > 0)
+			this.rearImageAnimation.setDuration(rearImageAnimationDuration);
 	}
 
 	/**
@@ -412,17 +434,17 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 *
 	 * @return The duration in milliseconds
 	 */
-	public long getFlipAnimationDuration() {
+	public long getMainAnimationDuration() {
 		return getInAnimation().getDuration();
 	}
 
 	/**
-	 * Set the duration of the flip animation.
+	 * Set the duration of the main animation.
 	 *
 	 * @param duration The duration in milliseconds
 	 */
-	public void setFlipAnimationDuration(long duration) {
-		if (DEBUG) Log.d(TAG, "Setting flipAnimationDuration="+duration);
+	public void setMainAnimationDuration(long duration) {
+		if (DEBUG) Log.d(TAG, "Setting mainAnimationDuration="+duration);
 		initInAnimation(duration);
 		initOutAnimation(duration);
 	}
@@ -469,7 +491,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			rearImageAnimation.setDuration(duration);
 	}
 
-	/* PERFORMING ANIMATION **********************************************/
+	//************************
+	// PERFORMING ANIMATION **
+	//************************
 
 	/**
 	 * Execute the flip animation with no delay
@@ -484,7 +508,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param delay any custom delay
 	 */
 	final public void flip(long delay) {
-		flip(!this.mChecked, delay);
+		flip(!this.checked, delay);
 	}
 
 	/**
@@ -495,50 +519,52 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param delay any custom delay
 	 */
 	final public void flip(final boolean showRear, long delay) {
+		if (DEBUG) Log.d(TAG, "Flip! With delay="+delay);
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				mChecked = showRear;
-				//setDisplayedChild(mChecked ? REAR_VIEW_INDEX : FRONT_VIEW_INDEX);
+				checked = showRear;
 				showNext();
-				if (mChecked && rearImage != null && rearImageAnimation != null) {
-					rearImage.setAlpha(0f);
+				if (checked && rearImage != null && rearImageAnimation != null) {
+					rearImage.setAlpha(0f);//This avoids to see a glitch of the rear image
 					new Handler().postDelayed(new Runnable() {
 						@Override
 						public void run() {
 							rearImage.setAlpha(1f);
 							rearImage.startAnimation(rearImageAnimation);
 						}
-					}, FLIP_DURATION * 2);
+					}, getInAnimation().getDuration());//Wait InAnimation completion before to start rearImageAnimation
 				}
-				mFlippingListener.onFlipped(FlipView.this, mChecked);
+				mFlippingListener.onFlipped(FlipView.this, checked);
 			}
 		}, delay);
 	}
 
 	/**
-	 * Show rear view immediately without flip animation.
+	 * Show rear view immediately without any animations.
 	 *
 	 * @param showRear <i>true</i> to show back image, <i>false</i> to show front image
 	 */
 	final public void flipSilently(boolean showRear) {
 		Animation inAnimation = getInAnimation();
 		Animation outAnimation = getOutAnimation();
-		this.mChecked = showRear;
+		this.checked = showRear;
 		setInAnimation(null);
 		setOutAnimation(null);
 		if (showRear) {
-			setDisplayedChild(1);
+			showNext();
 			setInAnimation(inAnimation);
 			setOutAnimation(outAnimation);
 		}
 	}
 
 	public boolean isFlipped() {
-		return mChecked;
+		return checked;
 	}
 
-	/* LAYOUT AND VIEWS **************************************************/
+	//********************
+	// LAYOUT AND VIEWS **
+	//********************
 
 	/**
 	 * Get the View being displayed on the <i>front</i>. The front view is
@@ -583,6 +609,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		if (viewGroup.getChildAt(0) instanceof ImageView) {
 			if (DEBUG) Log.d(TAG, "Found ImageView in the ViewGroup");
 			frontImage = (ImageView) viewGroup.getChildAt(0);
+		} else if (viewGroup.getChildAt(0) instanceof TextView) {
+			if (DEBUG) Log.d(TAG, "Found TextView in the ViewGroup");
+			frontText = (TextView) viewGroup.getChildAt(0);
 		}
 		setView(view, FRONT_VIEW_INDEX);
 	}
@@ -634,7 +663,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		if (viewGroup.getChildAt(index) instanceof ImageView) {
 			if (DEBUG) Log.d(TAG, "Found ImageView in the ViewGroup");
 			rearImage = (ImageView) viewGroup.getChildAt(index);
-		} else if (index > 2) rearImage = null; //Rollback in case multiple views are added (user must provide already the image in each layout added)
+		} else if (index > 2) {
+			rearImage = null; //Rollback in case multiple views are added (user must provide already the image in each layout added)
+		}
 		//Watch out! User can add first the rear view and after the front view that must be
 		// always at position 0. While all rear views start from index = 1.
 		setView(view, getChildCount() == 0 ? REAR_VIEW_INDEX : getChildCount());
@@ -700,6 +731,14 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		}
 	}
 
+	public void setFrontText(CharSequence text) {
+		if (this.frontText == null) {
+			Log.w(TAG, "TextView not found in the first child of the FrontLayout. Text cannot be set!");
+			return;
+		}
+		frontText.setText(text);
+	}
+
 	public void setRearImage(int imageResId) {
 		if (this.rearImage == null) {
 			Log.w(TAG, "ImageView not found in the child of the RearLayout. Image cannot be set!");
@@ -724,7 +763,10 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	}
 
 	public void setChildBackgroundDrawable(int index, Drawable drawable, int color) {
-		if (drawable == null) drawable = createOvalDrawable();
+		if (drawable == null) {
+			drawable = createOvalDrawable();
+			if (color == 0) color = Color.GRAY; //If no colors is provided by the user
+		}
 		if (getChildAt(index) != null) {
 			drawable.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
 			getChildAt(index).setBackground(drawable);
@@ -734,6 +776,5 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	public Drawable getChildBackgroundDrawable(int index) {
 		return getChildAt(index).getBackground();
 	}
-
 
 }
