@@ -37,10 +37,13 @@ bintray {
 		websiteUrl = siteUrl
 		vcsUrl = gitUrl
 		licenses = allLicenses
+		labels = ['android', 'flipview', 'viewanimator', 'viewflipper', 'gmail']
 		publish = true
 		publicDownloadNumbers = true
 		version {
+			name = libraryVersion
 			desc = libraryDescription
+			vcsTag = libraryVersion
 			gpg {
 				sign = true //Determines whether to GPG sign the files. The default is false
 				passphrase = properties.getProperty("bintray.gpg.password")
