@@ -47,39 +47,41 @@ Supported attributes with default values:
 	(see below).../>
 ```
 **ViewAnimator**
-`android:inAnimation="@anim/grow_from_middle_x_axis"` - Flip! Identifier for the animation to use when a view is shown.
-`android:outAnimation="@anim/shrink_to_middle_x_axis"` - Flip! Identifier for the animation to use when a view is hidden.
-`android:animateFirstView="true"` - Defines whether to animate the current View when the ViewAnimation is first displayed.
-**ViewFlipper**
-`android:autoStart="false"` - When true, automatically start animating.
-`android:flipInterval="3000"` - Time before next animation.
-**FlipView**
-`android:clickable="false"` - (!!) Set this if you want view react to the taps and animate it.
-`app:checked="false"` - Whether or not this component is flipped at startup
-`app:animateDesignLayoutOnly="false"` - false, if main animation should be applied only to the child views from design layout; true, to use inner layout.
-`app:animationDuration="100"` - Set the main animation duration.
-`app:anticipateInAnimationTime="0"` - Anticipate the beginning of the InAnimation.
-`app:enableInitialAnimation="false"` - Whether or not the initial animation should start at the beginning.
-`app:initialLayoutAnimation="@anim/scale_up"` - Starting animation.
-`app:initialLayoutAnimationDuration="250"` - Starting animation duration.
-`app:animateRearImage="true"` - Use default rear image animation.
-`app:frontLayout="@layout/flipview_front"` - Front view layout resource (for checked state -> false).
-`app:frontBackground="<OvalShape Drawable generated programmatically>"` - Front drawable resource (for checked state -> false).
-`app:frontBackgroundColor="<Color.GRAY set programmatically>"` - Front view color resource (for checked state -> false).
-`app:frontImage="@null"` - Front image resource (for checked state -> false).
-`app:frontImagePadding="0dp"` - Front image padding.
-`app:rearLayout="<OvalShape Drawable generated programmatically>"` - Rear view layout resource (for checked state -> true).
-`app:rearBackground="<Color.GRAY set programmatically>"` - Rear drawable resource (for checked state -> true).
-`app:reartBackgroundColor="Color.GRAY set programmatically"` - Rear view color resource (for checked state -> true).
-`app:rearImage="@drawable/ic_action_done"` - Rear accept image resource.
-`app:rearImagePadding="0dp"` - Rear image padding.
-`app:rearImageAnimation="@anim/scale_up"` - Rear image animation.
-`app:rearImageAnimationDuration="150"` - Rear image animation duration.
-**Not changable values** (in ms)
-`DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load.
-`SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
-`STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
+- `android:inAnimation="@anim/grow_from_middle_x_axis"` - Identifier for the animation to use when a view is shown.
+- `android:outAnimation="@anim/shrink_to_middle_x_axis"` - Identifier for the animation to use when a view is hidden.
+- `android:animateFirstView="true"` - Defines whether to animate the current View when the ViewAnimation is first displayed.
 
+**ViewFlipper**
+- `android:autoStart="false"` - When true, automatically start animating.
+- `android:flipInterval="3000"` - Time before next animation.
+
+**FlipView**
+- `android:clickable="false"` - (!!) Set this if you want view react to the taps and animate it.
+- `app:checked="false"` - Whether or not this component is flipped at startup
+- `app:animateDesignLayoutOnly="false"` - false, if main animation should be applied only to the child views from design layout; true, to use inner layout.
+- `app:animationDuration="100"` - Set the main animation duration.
+- `app:anticipateInAnimationTime="0"` - Anticipate the beginning of the InAnimation.
+- `app:enableInitialAnimation="false"` - Whether or not the initial animation should start at the beginning.
+- `app:initialLayoutAnimation="@anim/scale_up"` - Starting animation.
+- `app:initialLayoutAnimationDuration="250"` - Starting animation duration.
+- `app:animateRearImage="true"` - Use default rear image animation.
+- `app:frontLayout="@layout/flipview_front"` - Front view layout resource (for checked state -> false).
+- `app:frontBackground="<OvalShape Drawable generated programmatically>"` - Front drawable resource (for checked state -> false).
+- `app:frontBackgroundColor="<Color.GRAY set programmatically>"` - Front view color resource (for checked state -> false).
+- `app:frontImage="@null"` - Front image resource (for checked state -> false).
+- `app:frontImagePadding="0dp"` - Front image padding.
+- `app:rearLayout="<OvalShape Drawable generated programmatically>"` - Rear view layout resource (for checked state -> true).
+- `app:rearBackground="<Color.GRAY set programmatically>"` - Rear drawable resource (for checked state -> true).
+- `app:reartBackgroundColor="Color.GRAY set programmatically"` - Rear view color resource (for checked state -> true).
+- `app:rearImage="@drawable/ic_action_done"` - Rear accept image resource.
+- `app:rearImagePadding="0dp"` - Rear image padding.
+- `app:rearImageAnimation="@anim/scale_up"` - Rear image animation.
+- `app:rearImageAnimationDuration="150"` - Rear image animation duration.
+
+**Not changable values** (in ms)
+- `DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load.
+- `SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
+- `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
 # Change Log
 ###### v1.0.0 - 2015.11.01 (Initial release)
 - Initial LayoutAnimation & Initial LayoutAnimationDuration
