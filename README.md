@@ -29,10 +29,19 @@ Please, refer to those attributes documentation for more details.
 (coming soon)
 
 #Setup
-Import the library into your project using Gradle.
+Import the library into your project using Gradle with JCenter
 ```
 dependencies {
 	compile 'eu.davidea:flipview:1.0.0'
+}
+```
+Using bintray.com
+```
+repositories {
+	maven { url "http://dl.bintray.com/davideas/maven" }
+}
+dependencies {
+	compile 'eu.davidea:flipview:1.0.0@aar'
 }
 ```
 #### Pull requests / Issues / Improvement requests
