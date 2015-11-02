@@ -79,8 +79,8 @@ Supported attributes with default values:
 - `app:frontBackgroundColor="<Color.GRAY set programmatically>"` - Front view color resource (for checked state -> false).
 - `app:frontImage="@null"` - Front image resource (for checked state -> false).
 - `app:frontImagePadding="0dp"` - Front image padding.
-- `app:rearLayout="<OvalShape Drawable generated programmatically>"` - Rear view layout resource (for checked state -> true).
-- `app:rearBackground="<Color.GRAY set programmatically>"` - Rear drawable resource (for checked state -> true).
+- `app:rearLayout="@layout/flipview_rear"` - Rear view layout resource (for checked state -> true).
+- `app:rearBackground="<OvalShape Drawable generated programmatically>"` - Rear drawable resource (for checked state -> true).
 - `app:reartBackgroundColor="Color.GRAY set programmatically"` - Rear view color resource (for checked state -> true).
 - `app:rearImage="@drawable/ic_action_done"` - Rear accept image resource.
 - `app:rearImagePadding="0dp"` - Rear image padding.
