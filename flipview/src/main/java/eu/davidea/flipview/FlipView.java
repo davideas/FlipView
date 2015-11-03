@@ -24,11 +24,14 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PictureDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.ArcShape;
 import android.graphics.drawable.shapes.OvalShape;
+import android.graphics.drawable.shapes.RoundRectShape;
+import android.graphics.drawable.shapes.Shape;
 import android.os.Build;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
@@ -124,17 +127,12 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Child index to access the <i>front</i> view.
 	 */
-	private static final int FRONT_VIEW_INDEX = 0;
+	public static final int FRONT_VIEW_INDEX = 0;
 
 	/**
 	 * Child index to access the <i>rear</i> view.
 	 */
-	private static final int REAR_VIEW_INDEX = 1;
-
-	/**
-	 * Use this to apply a default resource value.
-	 */
-	public static final int DEFAULT_RESOURCE = 0;
+	public static final int REAR_VIEW_INDEX = 1;
 
 	/**
 	 * Reference to the TextView of the FrontLayout if exists
@@ -165,6 +163,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	private static boolean enableInitialAnimation = true;
 	private Animation initialLayoutAnimation;
 	private Animation rearImageAnimation;
+	private static float scaleDensity = 1f;
 	public static final int
 			DEFAULT_INITIAL_DELAY = 500,
 			SCALE_STEP_DELAY = 35,
@@ -685,8 +684,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Set the front view to be displayed when this component is in state <i>not checked</i>.
-	 * If an invalid resource or {@link #DEFAULT_RESOURCE} is
-	 * passed, then the default view will be applied.
 	 *
 	 * @param layoutResId The layout resource identifier.
 	 */
@@ -734,8 +731,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Set the rear view to be displayed when this component is in state <i>checked</i>.
-	 * If an invalid resource or {@link #DEFAULT_RESOURCE} is
-	 * passed, then the default view will be applied.
 	 *
 	 * @param layoutResId The layout resource identifier.
 	 */
@@ -860,28 +855,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		}
 	}
 
-	//TODO create static methods for ArcShape, OvalShape, RoundRectShape
-
-	public static ShapeDrawable createArcShapeDrawable(@ColorInt int color) {
-		ShapeDrawable shapeDrawable = new ShapeDrawable(new ArcShape(10f, 40f));
-		shapeDrawable.getPaint().setColor(color);
-		shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
-		shapeDrawable.getPaint().setAntiAlias(true);
-		return shapeDrawable;
-	}
-
-	public static ShapeDrawable createOvalDrawable(@ColorInt int color) {
-		ShapeDrawable shapeDrawable = new ShapeDrawable(new OvalShape());
-		shapeDrawable.getPaint().setColor(color);
-		shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
-		shapeDrawable.getPaint().setAntiAlias(true);
-		return shapeDrawable;
-	}
-
-	public void setChildBackgroundColor(int whichChild, int color) {
-		setChildBackgroundDrawable(whichChild, createOvalDrawable(color));
-	}
-
 	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	@SuppressWarnings("deprecation")
 	public void setChildBackgroundDrawable(int whichChild, int drawableResId) {
@@ -903,6 +876,63 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	public Drawable getChildBackgroundDrawable(int whichChild) {
 		return getChildAt(whichChild).getBackground();
+	}
+
+	public void setChildBackgroundColor(int whichChild, @ColorInt int color) {
+		setChildBackgroundDrawable(whichChild, createOvalDrawable(color));
+	}
+
+	//*******************
+	// SHAPE DRAWABLES **
+	//*******************
+
+	private static ShapeDrawable createShapeDrawable(int color, Shape shape) {
+		ShapeDrawable shapeDrawable = new ShapeDrawable(shape);
+		shapeDrawable.getPaint().setColor(color);
+		shapeDrawable.getPaint().setAntiAlias(true);
+		shapeDrawable.getPaint().setStyle(Paint.Style.FILL);
+		return shapeDrawable;
+	}
+
+	/**
+	 * @param color the desired color
+	 * @return ShapeDrawable with Oval shape
+	 */
+	public static ShapeDrawable createOvalDrawable(@ColorInt int color) {
+		return createShapeDrawable(color, new OvalShape());
+	}
+
+	/**
+	 * @param color the desired color
+	 * @param startAngle the angle (in degrees) where the arc begins
+	 * @param sweepAngle the sweep angle (in degrees).
+	 *                   Anything equal to or greater than 360 results in a complete circle/oval.
+	 * @return ShapeDrawable with Arc shape
+	 */
+	public static ShapeDrawable createArcShapeDrawable(
+			@ColorInt int color, float startAngle, float sweepAngle) {
+		return createShapeDrawable(color, new ArcShape(startAngle, sweepAngle));
+	}
+
+	/**
+	 * RoundRectShape constructor.
+	 * Specifies an outer (round)rect and an optional inner (round)rect.
+	 *
+	 * @param color the desired color
+	 * @param outerRadii An array of 8 radius values, for the outer roundrect.
+	 *                   The first two floats are for the top-left corner (remaining pairs correspond clockwise).
+	 *                   For no rounded corners on the outer rectangle, pass null.
+	 * @param inset      A RectF that specifies the distance from the inner rect to each side of the outer rect.
+	 *                   For no inner, pass null.
+	 * @param innerRadii An array of 8 radius values, for the inner roundrect.
+	 *                   The first two floats are for the top-left corner (remaining pairs correspond clockwise).
+	 *                   For no rounded corners on the inner rectangle, pass null.
+	 *                   If inset parameter is null, this parameter is ignored.
+	 * @return ShapeDrawable with RoundRect shape
+	 */
+	public static ShapeDrawable createRoundRectShapeDrawable(
+			@ColorInt int color, float[] outerRadii, RectF inset, float[] innerRadii) {
+		return createShapeDrawable(color, new RoundRectShape(outerRadii, inset, innerRadii));
 	}
 
 }

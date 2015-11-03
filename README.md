@@ -1,29 +1,29 @@
 [![Download](https://api.bintray.com/packages/davideas/maven/flipview/images/download.svg) ](https://bintray.com/davideas/maven/flipview/_latestVersion)
 
-# Flip View
+# FlipView
 
 ###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.03
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
 the front one in favor of the back one, and vice versa. Optionally more views can be
-displayed in series one after another since it extends `android.widget.ViewAnimator`.
+displayed in series one after another or can cycle with a interval.
 
-Usage is very simple. You just need to add this View to any layout (like you would do with
-any other View) and you customize the behaviours by assigning values to the optional
-properties in the layout or programmatically.
-
+Usage is very simple. You just need to add this View to any layout and you customize the behaviours
+by assigning values to the optional properties in the layout or programmatically.
 Please, refer to those attributes documentation for more details.
+
+Finally, FlipView extends `android.widget.ViewFlipper` that extends `android.widget.ViewAnimator`,
+which means you can call all functions of these two Android views.
 
 #### Main functionalities
 - Visible during design time ;-)
-- Custom In/Out animation.
-- Entry animation.
+- Custom In/Out animation + Entry animation + Rear ImageView animation
 - Custom layout, ImageView & TextView for front layout.
 - Custom layout, ImageView for rear layout.
 - Custom background Drawable & color.
-- Custom rear ImageView animation.
-- Properties customizable at design time and at run time with some limitations.
+- Autostart cycle animation with custom interval.
+- PictureDrawable for SVG resources.
 
 # Showcase
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
@@ -48,7 +48,7 @@ dependencies {
 Feel free to contribute and ask!
 
 #Usage
-Supported attributes with default values:
+Supported attributes with _default_ values:
 ``` xml
 <eu.davidea.flipview.FlipView
 	xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -97,28 +97,31 @@ Supported attributes with default values:
 ###### v1.1.0 - 2015.11.03
 - New attribute `rearImageAnimationDelay`.
 - Fixed bugs #4 #5 #6.
-- Overridden `showNext()`. Now it performs the flip accordingly with the existing settings and register its state.
-- Since the FlipView uses shapes to define its border and shadows One can use `frontBackground` & `rearBackground`
+- Overridden `showNext()` method from `ViewAnimator`. Now it performs the flip accordingly with the existing
+  settings and register its state.
+- Since the FlipView uses shapes to define its border and shadows, one can use `frontBackground` & `rearBackground`
   which always override any custom color set with `frontBackgroundColor` & `rearBackgroundColor`:
-  To give a color with a transparency and custom shape you should assign a Drawable resource with the desired shape
-  and color (#2 #3) or to assign this resource to the background of the custom layout.
+  To give a color (with a transparency) and a custom shape (with stroke) you should assign a Drawable resource with the
+  desired shape and color (#2 #3) or to assign this resource at design time to the `android:background` of the custom layout.
 - Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3).
+- New ShapeDrawables methods (Oval, Arc, RoundRect).
 
 ###### v1.0.0 - 2015.11.01 (Initial release)
-- Initial LayoutAnimation & Initial LayoutAnimationDuration
-  Reset & stop LayoutAnimationDelay
-- Custom In&Out Animation
-  Rear ImageAnimation & Rear ImageAnimationDuration
-- MainAnimationDuration
-- Flip & flipSilently
-- Custom FrontLayout & several custom RearLayout
-- Create BitmapFrom, PictureDrawable & ImageBitmap
-- Custom FrontImage, custom FrontText &, custom RearImage
-- Custom Child BackgroundDrawable & color
-- Create inner OvalDrawable, ScaleAnimation
-- Some animation and Drawables already included into he project, so you can start to test it
-- OnFlippingListener, inner onClick
-- Example Activity
+- Initial LayoutAnimation & Initial LayoutAnimationDuration.
+  Reset & stop LayoutAnimationDelay.
+- Custom In&Out Animation.
+  Rear ImageAnimation & Rear ImageAnimationDuration.
+- MainAnimationDuration.
+- Flip & flipSilently.
+- Custom FrontLayout & several custom RearLayout.
+- Create BitmapFrom, PictureDrawable & ImageBitmap.
+- Custom FrontImage, custom FrontText &, custom RearImage.
+- Custom Child BackgroundDrawable & color.
+- Create inner OvalDrawable, ScaleAnimation.
+- Some animation and Drawables already included into he project, so you can start to test it.
+- OnFlippingListener, inner onClick.
+- SVGPictureDrawable interface for asynchronous loading the SVG resource.
+- Example Activity.
 
 ###### Old releases
 See [releases](https://github.com/davideas/FlipView/releases) for old versions.
