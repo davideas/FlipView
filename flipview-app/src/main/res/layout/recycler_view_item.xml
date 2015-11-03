@@ -19,6 +19,6 @@
 		app:frontLayout="@layout/flipview_front_custom_text"
 		app:frontBackgroundColor="@color/colorPrimary"
 		app:rearLayout="@layout/flipview_rear_custom"
-		app:rearBackgroundColor="#49814B"/>
+		app:rearBackgroundColor="@color/colorAccent"/>
 
 </FrameLayout>

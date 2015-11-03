@@ -3,7 +3,6 @@
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="40dp"
 	android:layout_height="40dp"
-	android:padding="4dp"
 	android:elevation="4dp">
 
 	<ImageView
@@ -12,6 +11,6 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:contentDescription="@null"
-		android:gravity="center_horizontal"/>
+		android:gravity="center"/>
 
 </FrameLayout>

@@ -44,9 +44,10 @@
 		<attr name="rearImagePadding" format="dimension" />
 		<!-- Override the default rear image animation (default: scale_up) -->
 		<attr name="rearImageAnimation" format="reference" />
-		<!-- Set the rear image animation duration (default: 150ms) -->
+		<!-- Rear image animation delay (default: duration) -->
+		<attr name="rearImageAnimationDelay" format="integer" />
+		<!-- Rear image animation duration (default: 150ms) -->
 		<attr name="rearImageAnimationDuration" format="integer" />
-
 	</declare-styleable>
 
 </resources>

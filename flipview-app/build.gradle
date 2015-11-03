@@ -21,7 +21,8 @@ android {
 
 dependencies {
 	//See main build.gradle for values & versions
-	//compile 'eu.davidea:flipview:1.0.0@aar'
+	//compile 'eu.davidea:flipview:1.1.0'
+	//compile 'eu.davidea:flipview:1.1.0@aar'
 	compile project (':flipview')
 	compile (supportDependencies.appcompat) {
 		transitive = true;

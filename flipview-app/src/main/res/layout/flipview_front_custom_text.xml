@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
 		android:contentDescription="@null"
-		android:gravity="center_horizontal"
+		android:gravity="center"
 		style="@style/TextAppearance.AppCompat.Large.Inverse"
 		android:text="Aa"/>
 

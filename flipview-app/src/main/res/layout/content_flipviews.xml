@@ -41,8 +41,7 @@
 			app:frontLayout="@layout/flipview_front_custom"
 			app:frontBackgroundColor="@color/colorPrimary"
 			app:frontImage="@drawable/ic_add_shopping_cart_white_24dp"
-			app:rearLayout="@layout/flipview_rear_custom"
-			app:rearBackgroundColor="#49814B"/>
+			app:rearLayout="@layout/flipview_rear_custom"/>
 
 		<!-- FlipView like GMail with Text!
 			- Inner default initial animation (scale up)
@@ -66,7 +65,6 @@
 			app:frontBackground="@drawable/square_light"
 			app:rearLayout="@layout/flipview_rear_custom"
 			app:rearBackground="@drawable/square_light"
-			app:rearBackgroundColor="#49814B"
 			app:rearImageAnimation="@anim/grow_from_start_x_axis"/>
 
 		<!-- As "@+id/flip_horizontal_oval_view_big"
@@ -79,15 +77,15 @@
 			android:layout_height="52dp"
 			android:layout_gravity="center_horizontal"
 			android:clickable="true"
-			app:checked="false"
+			app:checked="true"
 			app:enableInitialAnimation="true"
-			app:animationDuration="1000"
+			app:animationDuration="100"
 			app:frontLayout="@layout/flipview_front_custom"
-			app:frontBackgroundColor="@color/colorPrimary"
+			app:frontBackground="@drawable/circle_light"
 			app:frontImage="@drawable/ic_github_circle_white_24dp"
 			app:rearLayout="@layout/flipview_rear_custom"
-			app:rearBackgroundColor="#49814B"
-			app:rearImageAnimationDuration="1000"/>
+			app:rearBackground="@drawable/circle_light_transparent"
+			app:rearImageAnimationDuration="200"/>
 
 	</LinearLayout>
 
@@ -119,7 +117,7 @@
 			app:checked="false"
 			app:enableInitialAnimation="true"
 			app:animationDuration="200"
-			app:frontBackgroundColor="@color/colorPrimary"
+			app:frontBackground="@drawable/circle_light"
 			app:frontImage="@drawable/ic_account_circle_white_24dp"
 			app:rearImageAnimationDuration="200"/>
 
@@ -145,10 +143,10 @@
 			app:enableInitialAnimation="true"
 			app:initialLayoutAnimation="@anim/fade_in"
 			app:initialLayoutAnimationDuration="1000"
-			app:frontBackgroundColor="@color/colorPrimary"
 			app:frontImage="@drawable/ic_cached_white_24dp"
-			app:rearBackgroundColor="@android:color/holo_red_dark"
+			app:frontBackground="@drawable/circle_light"
 			app:rearImage="@drawable/ic_cancel_white_24dp"
+			app:rearBackgroundColor="@color/colorAccent"
 			app:rearImageAnimationDuration="200"/>
 
 		<!--
@@ -175,9 +173,8 @@
 			app:anticipateInAnimationTime="120"
 			app:initialLayoutAnimation="@anim/fade_in"
 			app:initialLayoutAnimationDuration="1000"
-			app:frontBackgroundColor="@color/colorPrimary"
 			app:frontImage="@drawable/ic_favorite_outline_white_24dp"
-			app:rearBackgroundColor="@android:color/holo_red_dark"
+			app:frontBackground="@drawable/circle_light"
 			app:rearImage="@drawable/ic_favorite_white_24dp"
 			app:animateRearImage="false"/>
 
@@ -234,10 +231,8 @@
 			app:animationDuration="500"
 			app:anticipateInAnimationTime="150"
 			app:frontBackground="@drawable/square_light"
-			app:frontBackgroundColor="@color/colorPrimary"
 			app:frontImage="@drawable/ic_exit_to_app_white_24dp"
 			app:rearBackground="@drawable/square_light"
-			app:rearBackgroundColor="@color/colorPrimary"
 			app:animateRearImage="false"/>
 
 		<!--

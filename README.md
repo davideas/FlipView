@@ -2,7 +2,7 @@
 
 # Flip View
 
-###### Gmail like View & beyond - Master branch: v1 of 2015.11.01
+###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.03
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -23,7 +23,7 @@ Please, refer to those attributes documentation for more details.
 - Custom layout, ImageView for rear layout.
 - Custom background Drawable & color.
 - Custom rear ImageView animation.
-- Properties customizable at design time and at run time.
+- Properties customizable at design time and at run time with some limitations.
 
 # Showcase
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
@@ -32,7 +32,7 @@ Please, refer to those attributes documentation for more details.
 Import the library into your project using Gradle with JCenter
 ```
 dependencies {
-	compile 'eu.davidea:flipview:1.0.0'
+	compile 'eu.davidea:flipview:1.1.0'
 }
 ```
 Using bintray.com
@@ -41,7 +41,7 @@ repositories {
 	maven { url "http://dl.bintray.com/davideas/maven" }
 }
 dependencies {
-	compile 'eu.davidea:flipview:1.0.0@aar'
+	compile 'eu.davidea:flipview:1.1.0@aar'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -86,13 +86,24 @@ Supported attributes with default values:
 - `app:rearImagePadding="0dp"` - Rear image padding.
 - `app:rearImageAnimation="@anim/scale_up"` - Rear image animation.
 - `app:rearImageAnimationDuration="150"` - Rear image animation duration.
+- `app:rearImageAnimationDelay="duration"` - Rear image animation delay (depends the animation/duration it can be smart setting a custom delay).
 
-**Not changable values** (in ms)
+**Not changeable values** (in ms)
 - `DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load.
 - `SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
 - `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
 
 # Change Log
+###### v1.1.0 - 2015.11.03
+- New attribute `rearImageAnimationDelay`.
+- Fixed bugs #4 #5 #6.
+- Overridden `showNext()`. Now it performs the flip accordingly with the existing settings and register its state.
+- Since the FlipView uses shapes to define its border and shadows One can use `frontBackground` & `rearBackground`
+  which always override any custom color set with `frontBackgroundColor` & `rearBackgroundColor`:
+  To give a color with a transparency and custom shape you should assign a Drawable resource with the desired shape
+  and color (#2 #3) or to assign this resource to the background of the custom layout.
+- Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3).
+
 ###### v1.0.0 - 2015.11.01 (Initial release)
 - Initial LayoutAnimation & Initial LayoutAnimationDuration
   Reset & stop LayoutAnimationDelay

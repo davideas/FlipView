@@ -7,8 +7,8 @@ ext {
 
 	//Library
 	libraryCode = 1
-	libraryVersion = '1.0.0'
-	libraryDate = " of 2015.11.01"
+	libraryVersion = '1.1.0'
+	libraryDate = " of 2015.11.03"
 	libraryDescription = 'Flipping image like Gmail & beyond'
 	libraryName = 'FlipView'
 
