@@ -2,7 +2,7 @@
 
 # FlipView
 
-###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.03
+###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.04
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -13,8 +13,8 @@ Usage is very simple. You just need to add this View to any layout and you custo
 by assigning values to the optional properties in the layout or programmatically.
 Please, refer to those attributes documentation for more details.
 
-Finally, FlipView extends `android.widget.ViewFlipper` that extends `android.widget.ViewAnimator`,
-which means you can call all functions of these two Android views.
+Not less, FlipView extends `android.widget.ViewFlipper` that extends `android.widget.ViewAnimator`,
+which means you can call all public functions of these two Android views.
 
 #### Main functionalities
 - Visible during design time ;-)
@@ -93,8 +93,12 @@ Supported attributes with _default_ values:
 - `SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
 - `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
 
+# Limitations
+- Transparency has an [issue](https://code.google.com/p/android/issues/detail?id=78248) constraint for the shadow, you loose the elevation value.
+- Stroke and background color on custom Drawable should be preset by the user. 
+
 # Change Log
-###### v1.1.0 - 2015.11.03
+###### v1.1.0 - 2015.11.04
 - New attribute `rearImageAnimationDelay`.
 - Fixed bugs #4 #5 #6.
 - Overridden `showNext()` method from `ViewAnimator`. Now it performs the flip accordingly with the existing
@@ -103,9 +107,8 @@ Supported attributes with _default_ values:
   which always override any custom color set with `frontBackgroundColor` & `rearBackgroundColor`:
   To give a color (with a transparency) and a custom shape (with stroke) you should assign a Drawable resource with the
   desired shape and color (#2 #3) or to assign this resource at design time to the `android:background` of the custom layout.
-- Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3).
-  Note that transparency has a constraint for the shadow, you loose the elevation value.
-- New ShapeDrawables methods (Oval, Arc, RoundRect).
+- Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3) with a limitation.
+- New ShapeDrawables static methods (Oval, Arc, RoundRect).
 - Adapted example to show Autostart and how 2 layouts can be animated.
 
 ###### v1.0.0 - 2015.11.01 (Initial release)

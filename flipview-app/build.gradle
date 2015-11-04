@@ -8,7 +8,7 @@ android {
 		applicationId "eu.davidea.examples.flipview"
 		minSdkVersion minSdk
 		targetSdkVersion targetSdk
-		versionCode versionCode
+		versionCode libraryCode
 		versionName libraryVersion + libraryDate
 	}
 	buildTypes {

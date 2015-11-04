@@ -8,9 +8,9 @@ ext {
 	//Library
 	libraryCode = 2
 	libraryVersion = '1.1.0'
-	libraryDate = " of 2015.11.03"
-	libraryDescription = 'Flipping image like Gmail & beyond'
+	libraryDate = " of 2015.11.04"
 	libraryName = 'FlipView'
+	libraryDescription = 'Flipping views like Gmail & beyond'
 
 	//Library Repository
 	bintrayRepo = 'maven'
