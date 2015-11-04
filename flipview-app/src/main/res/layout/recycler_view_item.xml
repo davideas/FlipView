@@ -6,19 +6,22 @@
 	android:id="@+id/recycler_view_item"
 	android:layout_width="wrap_content"
 	android:layout_height="wrap_content"
-	android:layout_margin="8dp">
+	android:layout_margin="4dp">
 
 	<eu.davidea.flipview.FlipView
 		android:id="@+id/flip_view"
-		android:layout_width="40dp"
-		android:layout_height="40dp"
+		android:layout_width="48dp"
+		android:layout_height="48dp"
 		android:layout_gravity="center"
+		android:padding="4dp"
+		android:clipToPadding="false"
 		android:clickable="true"
 		app:checked="false"
 		app:enableInitialAnimation="true"
 		app:frontLayout="@layout/flipview_front_custom_text"
 		app:frontBackgroundColor="@color/colorPrimary"
 		app:rearLayout="@layout/flipview_rear_custom"
-		app:rearBackgroundColor="@color/colorAccent"/>
+		app:rearBackgroundColor="@color/colorAccent"
+		app:rearImageAnimationDelay="0"/>
 
 </FrameLayout>

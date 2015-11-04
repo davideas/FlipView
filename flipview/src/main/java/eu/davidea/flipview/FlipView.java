@@ -290,6 +290,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * API 16
+	 *
 	 * @see Build.VERSION_CODES#JELLY_BEAN
 	 */
 	public static boolean hasJellyBean() {
@@ -298,6 +299,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * API 22
+	 *
 	 * @see Build.VERSION_CODES#LOLLIPOP
 	 */
 	public static boolean hasLollipop() {
@@ -542,7 +544,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param delay any custom delay
 	 */
 	final public void showNext(long delay) {
-		if (DEBUG) Log.d(TAG, "showNext "+(getDisplayedChild() + 1)+" delay="+delay);
+		if (DEBUG) Log.d(TAG, "showNext " + (getDisplayedChild() + 1) + " delay=" + delay);
 		this.flip(getDisplayedChild() + 1, delay);
 	}
 
@@ -561,7 +563,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param delay any custom delay
 	 */
 	final public void showPrevius(long delay) {
-		if (DEBUG) Log.d(TAG, "showPrevius "+(getDisplayedChild() - 1)+" delay="+delay);
+		if (DEBUG) Log.d(TAG, "showPrevius " + (getDisplayedChild() - 1) + " delay=" + delay);
 		this.flip(getDisplayedChild() - 1, delay);
 	}
 
@@ -598,11 +600,12 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param delay      any custom delay
 	 */
 	final public void flip(final int whichChild, long delay) {
-		if (DEBUG) Log.d(TAG, "Flip! whichChild=" + whichChild + ", previousChild="+getDisplayedChild()+", delay=" + delay);
+		if (DEBUG)
+			Log.d(TAG, "Flip! whichChild=" + whichChild + ", previousChild=" + getDisplayedChild() + ", delay=" + delay);
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				checked = (whichChild > FRONT_VIEW_INDEX);
+			checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX);
 				setDisplayedChild(whichChild);//start main animation
 				animateRearImageIfNeeded();
 				mFlippingListener.onFlipped(FlipView.this, checked);
@@ -639,7 +642,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @param whichChild the index of the child view to display (first View has index=0).
 	 */
 	final public void flipSilently(int whichChild) {
-		if (DEBUG) Log.d(TAG, "flipSilently whichChild="+whichChild);
+		if (DEBUG) Log.d(TAG, "flipSilently whichChild=" + whichChild);
 		whichChild = checkIndex(whichChild);
 		Animation inAnimation = super.getInAnimation();
 		Animation outAnimation = super.getOutAnimation();
@@ -771,6 +774,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		setView(view, getChildCount() == 0 ? REAR_VIEW_INDEX : getChildCount());
 	}
 
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 	private void setView(View view, int whichChild) {
 		if (view == null)
 			throw new IllegalArgumentException("The provided view must not be null");
@@ -903,7 +907,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	}
 
 	/**
-	 * @param color the desired color
+	 * @param color      the desired color
 	 * @param startAngle the angle (in degrees) where the arc begins
 	 * @param sweepAngle the sweep angle (in degrees).
 	 *                   Anything equal to or greater than 360 results in a complete circle/oval.
@@ -918,7 +922,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * RoundRectShape constructor.
 	 * Specifies an outer (round)rect and an optional inner (round)rect.
 	 *
-	 * @param color the desired color
+	 * @param color      the desired color
 	 * @param outerRadii An array of 8 radius values, for the outer roundrect.
 	 *                   The first two floats are for the top-left corner (remaining pairs correspond clockwise).
 	 *                   For no rounded corners on the outer rectangle, pass null.

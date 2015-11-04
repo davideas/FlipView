@@ -104,7 +104,9 @@ Supported attributes with _default_ values:
   To give a color (with a transparency) and a custom shape (with stroke) you should assign a Drawable resource with the
   desired shape and color (#2 #3) or to assign this resource at design time to the `android:background` of the custom layout.
 - Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3).
+  Note that transparency has a constraint for the shadow, you loose the elevation value.
 - New ShapeDrawables methods (Oval, Arc, RoundRect).
+- Adapted example to show Autostart and how 2 layouts can be animated.
 
 ###### v1.0.0 - 2015.11.01 (Initial release)
 - Initial LayoutAnimation & Initial LayoutAnimationDuration.
