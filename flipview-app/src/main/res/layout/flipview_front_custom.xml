@@ -12,8 +12,5 @@
 		android:layout_gravity="center"
 		android:contentDescription="@null"
 		android:gravity="center"/>
-		<!--android:clipToPadding="false"-->
-		<!--android:outlineProvider="bounds"-->
-		<!--android:elevation="4dp"/>-->
 
 </FrameLayout>

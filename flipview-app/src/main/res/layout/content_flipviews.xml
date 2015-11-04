@@ -30,15 +30,17 @@
 			<!-- FlipView like GMail!
 				- Inner default initial animation (scale up)
 				- Default in/out animation (flip on Y axis: shrink and grow on X axis) on click
+				- Width and Height +8dp (padding x 2)
 				- Front & rear custom layout (usage of elevation attribute)
 				- Front & rear custom background color
+				  (front color is set in the onCreate of the Activity)
 				- Default rear image animation (scale up)
 				- Default rear image animation duration (150ms)
 			-->
 			<eu.davidea.flipview.FlipView
 				android:id="@+id/flip_horizontal_oval_view_big"
-				android:layout_width="60dp"
-				android:layout_height="60dp"
+				android:layout_width="@dimen/fv_normal_elevated"
+				android:layout_height="@dimen/fv_normal_elevated"
 				android:layout_marginRight="@dimen/activity_horizontal_margin"
 				android:layout_marginEnd="@dimen/activity_horizontal_margin"
 				android:layout_gravity="center_horizontal"
@@ -48,7 +50,6 @@
 				app:checked="false"
 				app:enableInitialAnimation="true"
 				app:frontLayout="@layout/flipview_front_custom"
-				app:frontBackgroundColor="@color/colorPrimary"
 				app:frontImage="@drawable/ic_add_shopping_cart_white_24dp"
 				app:rearLayout="@layout/flipview_rear_custom"
 				app:rearImageAnimationDelay="0"/>
@@ -56,6 +57,7 @@
 			<!-- FlipView like GMail with Text!
 				- Inner default initial animation (scale up)
 				- Default in/out animation (flip on Y axis: shrink and grow on X axis) on click
+				- Width and Height +8dp (padding x 2)
 				- Front & rear custom layout (usage of elevation attribute and a TextView)
 				- Front & rear custom background drawable
 				- Default rear image animation (scale up)
@@ -63,8 +65,8 @@
 			-->
 			<eu.davidea.flipview.FlipView
 				android:id="@+id/flip_horizontal_oval_textview_big"
-				android:layout_width="60dp"
-				android:layout_height="60dp"
+				android:layout_width="@dimen/fv_normal_elevated"
+				android:layout_height="@dimen/fv_normal_elevated"
 				android:layout_marginRight="@dimen/activity_horizontal_margin"
 				android:layout_marginEnd="@dimen/activity_horizontal_margin"
 				android:layout_gravity="center_horizontal"
@@ -85,8 +87,8 @@
 			-->
 			<eu.davidea.flipview.FlipView
 				android:id="@+id/flip_horizontal_oval_view_big_precision"
-				android:layout_width="60dp"
-				android:layout_height="60dp"
+				android:layout_width="@dimen/fv_normal_elevated"
+				android:layout_height="@dimen/fv_normal_elevated"
 				android:layout_gravity="center_horizontal"
 				android:padding="4dp"
 				android:clipToPadding="false"
@@ -142,8 +144,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/scale_oval_view"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:layout_marginRight="@dimen/activity_horizontal_margin"
 					android:layout_marginEnd="@dimen/activity_horizontal_margin"
 					android:outAnimation="@anim/scale_down"
@@ -169,8 +171,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/fade_oval_view"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:layout_marginRight="@dimen/activity_horizontal_margin"
 					android:layout_marginEnd="@dimen/activity_horizontal_margin"
 					android:outAnimation="@anim/shrink_to_middle_y_axis"
@@ -199,8 +201,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/fade_oval_view2"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:layout_marginRight="@dimen/activity_horizontal_margin"
 					android:layout_marginEnd="@dimen/activity_horizontal_margin"
 					android:outAnimation="@anim/fade_out"
@@ -222,13 +224,14 @@
 					- Not checked (by default), optionally you can lock the checked
 					  status by setting true
 					- Don't animate initially!
+					- Width and Height +8dp (padding x 2)
 					- Front custom layout with elevation
 					- Front custom background drawable with stroke
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/flip_horizontal_oval_view_locked"
-					android:layout_width="48dp"
-					android:layout_height="48dp"
+					android:layout_width="@dimen/fv_mini_elevated"
+					android:layout_height="@dimen/fv_mini_elevated"
 					android:layout_marginTop="-4dp"
 					android:padding="4dp"
 					android:clipToPadding="false"
@@ -267,8 +270,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/slide_left_square_view"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:layout_marginRight="@dimen/activity_horizontal_margin"
 					android:layout_marginEnd="@dimen/activity_horizontal_margin"
 					android:inAnimation="@anim/slide_in_from_left"
@@ -293,8 +296,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/flip_vertical_view_custom"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:layout_marginRight="@dimen/activity_horizontal_margin"
 					android:layout_marginEnd="@dimen/activity_horizontal_margin"
 					android:clickable="true"
@@ -332,8 +335,8 @@
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/flip_horizontal_flip_child_views"
-					android:layout_width="40dp"
-					android:layout_height="40dp"
+					android:layout_width="@dimen/fv_mini"
+					android:layout_height="@dimen/fv_mini"
 					android:clickable="true"
 					app:checked="false"
 					app:enableInitialAnimation="true"

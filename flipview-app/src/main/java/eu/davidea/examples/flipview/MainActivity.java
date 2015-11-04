@@ -1,6 +1,7 @@
 package eu.davidea.examples.flipview;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity {
 		});
 
 		initializeRecyclerView();
+
+		//Example to set background color to the front layout programmatically
+		FlipView flipView = (FlipView) findViewById(R.id.flip_horizontal_oval_view_big);
+		flipView.setChildBackgroundColor(FlipView.FRONT_VIEW_INDEX, Color.RED);
 	}
 
 	private void initializeRecyclerView() {
