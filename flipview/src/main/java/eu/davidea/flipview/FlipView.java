@@ -163,7 +163,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	private static boolean enableInitialAnimation = true;
 	private Animation initialLayoutAnimation;
 	private Animation rearImageAnimation;
-	private static float scaleDensity = 1f;
 	public static final int
 			DEFAULT_INITIAL_DELAY = 500,
 			SCALE_STEP_DELAY = 35,
@@ -279,7 +278,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	@Override
 	public void onClick(View v) {
-		showNext();
+		this.showNext();
 	}
 
 	//******************
@@ -655,7 +654,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-			checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX);//It's tricky!
+				checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX);//It's tricky!
 				setDisplayedChild(whichChild);//start main animation
 				animateRearImageIfNeeded();
 				mFlippingListener.onFlipped(FlipView.this, checked);
@@ -891,7 +890,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	public void setFrontImage(int imageResId) {
 		if (this.frontImage == null) {
-			Log.w(TAG, "ImageView not found in the first child of the FrontLayout. Image cannot be set!");
+			if (this.frontText == null) //Avoid the warning message if image is correctly null because of a TextView
+				Log.w(TAG, "ImageView not found in the first child of the FrontLayout. Image cannot be set!");
 			return;
 		}
 		if (imageResId == 0) return;

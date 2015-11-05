@@ -27,11 +27,10 @@ public class MainActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
 
 		//Enable DEBUG logs at runtime
-		FlipView.enableLogs();
-
-		setContentView(R.layout.activity_main);
+		FlipView.enableLogs(true);
 
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
