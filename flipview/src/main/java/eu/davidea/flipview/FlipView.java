@@ -214,8 +214,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		boolean startupAnimation = a.getBoolean(R.styleable.FlipView_enableInitialAnimation, false);
 		boolean animateDesignChildViewsOnly = a.getBoolean(R.styleable.FlipView_animateDesignLayoutOnly, false);
 
-		//FrontView
 		if (!animateDesignChildViewsOnly) {
+			//FrontView
 			int frontLayout = a.getResourceId(R.styleable.FlipView_frontLayout, R.layout.flipview_front);
 			Drawable frontBackground = a.getDrawable(R.styleable.FlipView_frontBackground);
 			int frontBackgroundColor = a.getColor(R.styleable.FlipView_frontBackgroundColor, Color.GRAY);
@@ -226,9 +226,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 				setChildBackgroundColor(FRONT_VIEW_INDEX, frontBackgroundColor);
 			else setChildBackgroundDrawable(FRONT_VIEW_INDEX, frontBackground);
 			setFrontImage(frontImage);
-		}
 
-		if (!animateDesignChildViewsOnly) {
 			//RearView
 			int rearLayout = a.getResourceId(R.styleable.FlipView_rearLayout, R.layout.flipview_rear);
 			Drawable rearBackground = a.getDrawable(R.styleable.FlipView_rearBackground);
@@ -248,7 +246,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		//Init main(Flip) animations
 		mainAnimationDuration = a.getInteger(R.styleable.FlipView_animationDuration, FLIP_DURATION);
 		rearImageAnimationDuration = a.getInteger(R.styleable.FlipView_rearImageAnimationDuration, REAR_IMAGE_ANIMATION_DURATION);
-		rearImageAnimationDelay = a.getInteger(R.styleable.FlipView_rearImageAnimationDelay, (int) rearImageAnimationDuration);
+		rearImageAnimationDelay = a.getInteger(R.styleable.FlipView_rearImageAnimationDelay, (int) mainAnimationDuration);
 		anticipateInAnimationTime = a.getInteger(R.styleable.FlipView_anticipateInAnimationTime, 0);
 		if (!isInEditMode()) {
 			//This also initialize the in/out animations
@@ -289,17 +287,13 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	//******************
 
 	/**
-	 * Call this once to enable DEBUG logs.
+	 * Call this once to enable or disable DEBUG logs.<br/>
+	 * DEBUG logs are disabled by default.
+	 *
+	 * @param enable true to show DEBUG logs, false to hide them.
 	 */
-	public static void enableLogs() {
-		DEBUG = true;
-	}
-
-	/**
-	 * Call this once to disable DEBUG logs.
-	 */
-	public static void disableLogs() {
-		DEBUG = false;
+	public static void enableLogs(boolean enable) {
+		DEBUG = enable;
 	}
 
 	/**
@@ -405,8 +399,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		if (getInAnimation() == null)
 			this.setInAnimation(getContext(), R.anim.grow_from_middle_x_axis);
 		super.getInAnimation().setDuration(duration);
-		if (anticipateInAnimationTime > duration) anticipateInAnimationTime = duration;
-		super.getInAnimation().setStartOffset(duration - anticipateInAnimationTime);
+		super.getInAnimation().setStartOffset(anticipateInAnimationTime > duration ?
+						duration : duration - anticipateInAnimationTime);
 	}
 
 	private void initOutAnimation(long duration) {
@@ -541,6 +535,47 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			rearImageAnimation.setDuration(duration);
 	}
 
+	/**
+	 * Get the anticipation time for InAnimation.
+	 *
+	 * @return The anticipation time in milliseconds
+	 */
+	public long getAnticipateInAnimationTime() {
+		return anticipateInAnimationTime;
+	}
+
+	/**
+	 * Set the anticipation time for InAnimation: don't wait OutAnimation completion.<br/>
+	 * Depends by the effect that user desires, he can anticipate the entrance of rear layout.<br/>
+	 * New delay is: current {@link #mainAnimationDuration} - anticipation time.<br/>
+	 * Max value is the current mainAnimationDuration. Default value is 0.
+	 *
+	 * @param time The anticipation time in milliseconds
+	 */
+	public void setAnticipateInAnimationTime(long time) {
+		if (DEBUG) Log.d(TAG, "Setting anticipateInAnimationTime=" + time);
+		this.anticipateInAnimationTime = time;
+	}
+
+	/**
+	 * Get the start animation delay of the rear ImageView.
+	 *
+	 * @return The delay in milliseconds
+	 */
+	public long getRearImageAnimationDelay() {
+		return rearImageAnimationDelay;
+	}
+
+	/**
+	 * Set the start animation delay of the rear ImageView.
+	 *
+	 * @param delay The delay in milliseconds
+	 */
+	public void setRearImageAnimationDelay(long delay) {
+		if (DEBUG) Log.d(TAG, "Setting rearImageAnimationDelay=" + delay);
+		this.rearImageAnimationDelay = delay;
+	}
+
 	//************************
 	// PERFORMING ANIMATION **
 	//************************
@@ -630,7 +665,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	private void animateRearImageIfNeeded() {
 		if (checked && rearImage != null && rearImageAnimation != null) {
-			rearImage.setAlpha(0f);//This avoids to see a glitch of the rear image
+			rearImage.setAlpha(0f);//Alpha 0 and Handler are needed to avoid the glitch of the rear image
 			new Handler().postDelayed(new Runnable() {
 				@Override
 				public void run() {
