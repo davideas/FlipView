@@ -2,7 +2,7 @@
 
 # FlipView
 
-###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.04
+###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.05
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -94,42 +94,34 @@ Supported attributes with _default_ values:
 - `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
 
 # Limitations
-- Transparency has an [issue](https://code.google.com/p/android/issues/detail?id=78248) constraint for the shadow, you loose the elevation value.
-- Stroke and background color on custom Drawable should be preset by the user. 
+- Transparency has a little glitch when used with elevation, you could see shadow In the shape: more transparent the color is more visible the shadow is.
+- Using layer type _software_ on the entire layout it removes the shadow/elevation.
+- Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
 # Change Log
-###### v1.1.0 - 2015.11.04
-- New attribute `rearImageAnimationDelay`.
+###### v1.1.0 - 2015.11.05
+- New attribute `app:rearImageAnimationDelay`.
 - Fixed bugs #4 #5 #6.
-- Overridden `showNext()` method from `ViewAnimator`. Now it performs the flip accordingly with the existing
+- Overridden `showNext()` & `showPrevious()` methods from `ViewAnimator`: now they perform the flip accordingly with the existing
   settings and register its state.
-- Since the FlipView uses shapes to define its border and shadows, one can use `frontBackground` & `rearBackground`
-  which always override any custom color set with `frontBackgroundColor` & `rearBackgroundColor`:
-  To give a color (with a transparency) and a custom shape (with stroke) you should assign a Drawable resource with the
-  desired shape and color (#2 #3) or to assign this resource at design time to the `android:background` of the custom layout.
-- Desired color with a transparency of the inner drawable (OvalShape) can be assigned at design time & runtime (#2 #3) with a limitation.
-- New ShapeDrawables static methods (Oval, Arc, RoundRect).
-- Adapted example to show Autostart and how 2 layouts can be animated.
-
-###### v1.0.0 - 2015.11.01 (Initial release)
-- Initial LayoutAnimation & Initial LayoutAnimationDuration.
-  Reset & stop LayoutAnimationDelay.
-- Custom In&Out Animation.
-  Rear ImageAnimation & Rear ImageAnimationDuration.
-- MainAnimationDuration.
-- Flip & flipSilently.
-- Custom FrontLayout & several custom RearLayout.
-- Create BitmapFrom, PictureDrawable & ImageBitmap.
-- Custom FrontImage, custom FrontText &, custom RearImage.
-- Custom Child BackgroundDrawable & color.
-- Create inner OvalDrawable, ScaleAnimation.
-- Some animation and Drawables already included into he project, so you can start to test it.
-- OnFlippingListener, inner onClick.
-- SVGPictureDrawable interface for asynchronous loading the SVG resource.
-- Example Activity.
+- Since the FlipView uses shapes to define its border and shadows, one can use `app:frontBackground` & `app:rearBackground`
+  for the custom Drawable with the desired shape, color and stroke, which always override inner Drawables.
+  Alternatively you can do this also by assigning the resource to `android:background` of the _custom_ layout.
+  Because of that, for runtime, the method `setChildBackgroundDrawable(child, drawable)` has been reviewed (#2 #3).
+- Instead, if you want to use the inner Drawable (OvalShape) and only change color with alpha value, you can do it
+  at design time with `app:frontBackgroundColor` & `app:rearBackgroundColor` and at runtime with the new method
+  `setChildBackgroundColor(child, color)`: it always creates an OvalShape with the custom color (#2 #3).
+  **Note:** setBackgroundColor is the method of `android.view.View`, so it does the default job!
+- First version of ShapeDrawables static methods (Oval, Arc, RoundRect).
+- Added new static methods to enable/disable logs at runtime (call them once in the app!).
+- Added methods to retrieve ImageViews and front TextView objects.
+- Automatic layer type _software_ when setting PictureDrawable for SVG (applied on ImageView reference only!).
+- Adapted example to show Autostart and how 2 entire layouts can be animated ;-)
 
 ###### Old releases
 See [releases](https://github.com/davideas/FlipView/releases) for old versions.
+
+v1.0.0 - 2015.11.01
 
 # License
 

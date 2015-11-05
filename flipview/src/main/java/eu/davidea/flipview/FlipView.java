@@ -105,7 +105,7 @@ import android.widget.ViewFlipper;
 public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.OnClickListener {
 
 	private static final String TAG = FlipView.class.getSimpleName();
-	private static final boolean DEBUG = true;
+	private static boolean DEBUG = false;
 
 	/**
 	 * Custom Listener
@@ -289,6 +289,20 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	//******************
 
 	/**
+	 * Call this once to enable DEBUG logs.
+	 */
+	public static void enableLogs() {
+		DEBUG = true;
+	}
+
+	/**
+	 * Call this once to disable DEBUG logs.
+	 */
+	public static void disableLogs() {
+		DEBUG = false;
+	}
+
+	/**
 	 * API 16
 	 *
 	 * @see Build.VERSION_CODES#JELLY_BEAN
@@ -417,6 +431,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			setInitialLayoutAnimation(animationResId > 0 ?
 					AnimationUtils.loadAnimation(getContext(), animationResId) :
 					createScaleAnimation());//Usage of the method it's faster (not read from disk)
+			if (DEBUG) Log.d(TAG, "Initial animation is active!");
 		} catch (Resources.NotFoundException e) {
 			Log.e(TAG, "Initial animation with id " + animationResId
 					+ " could not be found. Initial animation cannot be set!");
@@ -605,7 +620,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-			checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX);
+			checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX);//It's tricky!
 				setDisplayedChild(whichChild);//start main animation
 				animateRearImageIfNeeded();
 				mFlippingListener.onFlipped(FlipView.this, checked);
@@ -692,8 +707,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 */
 	public void setFrontLayout(int layoutResId) {
 		if (layoutResId == R.layout.flipview_front) {
-			if (DEBUG) Log.d(TAG, "Adding Inner FrontLayout");
-		} else if (DEBUG) Log.d(TAG, "Setting FrontLayout " + layoutResId);
+			if (DEBUG) Log.d(TAG, "Adding inner FrontLayout");
+		} else if (DEBUG) Log.d(TAG, "Setting user FrontLayout " + layoutResId);
 		setFrontLayout(LayoutInflater.from(getContext()).inflate(layoutResId, this, false));
 	}
 
@@ -713,13 +728,13 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		}
 		//If any ImageView at first position is provided, reference to this front ImageView is saved.
 		if (viewGroup.getChildAt(FRONT_VIEW_INDEX) instanceof ImageView) {
-			if (DEBUG) Log.d(TAG, "Found ImageView in the ViewGroup");
+			if (DEBUG) Log.d(TAG, "Found ImageView in FrontLayout");
 			frontImage = (ImageView) viewGroup.getChildAt(FRONT_VIEW_INDEX);
 		} else if (viewGroup.getChildAt(FRONT_VIEW_INDEX) instanceof TextView) {
-			if (DEBUG) Log.d(TAG, "Found TextView in the ViewGroup");
+			if (DEBUG) Log.d(TAG, "Found TextView in FrontLayout");
 			frontText = (TextView) viewGroup.getChildAt(FRONT_VIEW_INDEX);
 		}
-		setView(view, FRONT_VIEW_INDEX);
+		this.addView(view, FRONT_VIEW_INDEX);
 	}
 
 	/**
@@ -739,8 +754,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 */
 	public void addRearLayout(int layoutResId) {
 		if (layoutResId == R.layout.flipview_rear) {
-			if (DEBUG) Log.d(TAG, "Adding Inner RearLayout");
-		} else if (DEBUG) Log.d(TAG, "Adding RearLayout " + layoutResId);
+			if (DEBUG) Log.d(TAG, "Adding inner RearLayout");
+		} else if (DEBUG) Log.d(TAG, "Adding user RearLayout " + layoutResId);
 		addRearLayout(LayoutInflater.from(getContext()).inflate(layoutResId, this, false));
 	}
 
@@ -764,26 +779,38 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		}
 		//If any ImageView is provided, reference to this rear ImageView is saved
 		if (viewGroup.getChildAt(whichChild) instanceof ImageView) {
-			if (DEBUG) Log.d(TAG, "Found ImageView in the ViewGroup");
+			if (DEBUG) Log.d(TAG, "Found ImageView in the RearLayout");
 			rearImage = (ImageView) viewGroup.getChildAt(whichChild);
 		} else if (whichChild > 2) {
 			rearImage = null; //Rollback in case multiple views are added (user must provide already the image in each layout added)
 		}
 		//Watch out! User can add first the rear view and after the front view that must be
 		// always at position 0. While all rear views start from index = 1.
-		setView(view, getChildCount() == 0 ? REAR_VIEW_INDEX : getChildCount());
+		this.addView(view, getChildCount() == 0 ? REAR_VIEW_INDEX : getChildCount());
 	}
 
-	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
-	private void setView(View view, int whichChild) {
+	@Override
+	public void addView(View view, int whichChild) {
 		if (view == null)
 			throw new IllegalArgumentException("The provided view must not be null");
 
-		if (DEBUG) Log.d(TAG, "Setting view at index " + whichChild);
+		if (DEBUG) Log.d(TAG, "Setting child view at index " + whichChild);
 
 		if (super.getChildAt(whichChild) != null)
 			super.removeViewAt(whichChild);
 		super.addView(view, whichChild, super.generateDefaultLayoutParams());
+	}
+
+	public TextView getFrontTextView() {
+		return this.frontText;
+	}
+
+	public ImageView getFrontImageView() {
+		return this.frontImage;
+	}
+
+	public ImageView getRearImageView() {
+		return this.rearImage;
 	}
 
 	public Bitmap createBitmapFrom(PictureDrawable pictureDrawable, float size) {
@@ -803,6 +830,11 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		return pictureDrawable;
 	}
 
+	/**
+	 * {@see #LAYER_TYPE_SOFTWARE} is automatically set for you only on the ImageView reference.
+	 *
+	 * @param drawable The SVG Drawable
+	 */
 	@Override
 	public void setPictureDrawable(PictureDrawable drawable) {
 		pictureDrawable = drawable;
@@ -810,6 +842,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			Log.w(TAG, "ImageView not found in the first child of the FrontLayout. Image cannot be set!");
 			return;
 		}
+		frontImage.setLayerType(LAYER_TYPE_SOFTWARE, null);
 		frontImage.setImageDrawable(pictureDrawable);
 	}
 
