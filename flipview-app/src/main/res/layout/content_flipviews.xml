@@ -232,7 +232,7 @@
 					  status by setting true
 					- Don't animate initially!
 					- Width and Height +8dp (padding x 2)
-					- Front custom layout with elevation
+					- Front custom layout with elevation (!!DELETED!! CAUSING APP KILLING ON API=23)
 					- Front custom background drawable with stroke
 				-->
 				<eu.davidea.flipview.FlipView
@@ -243,7 +243,6 @@
 					android:padding="4dp"
 					android:clipToPadding="false"
 					android:clickable="false"
-					app:frontLayout="@layout/flipview_front_custom"
 					app:frontBackground="@drawable/circle_light_stroke"
 					app:frontImage="@drawable/ic_lock_white_24dp"/>
 
@@ -347,7 +346,7 @@
 					  This behaviour cannot be changed at runtime.
 					  This FlipView flips all ImageViews in series, background remains static.
 					- Default in/out animation (flip)
-		>			- Use of "android:background" attribute for a custom drawable
+					- Use of "android:background" attribute for a custom drawable
 				-->
 				<eu.davidea.flipview.FlipView
 					android:id="@+id/flip_horizontal_flip_child_views"
@@ -357,7 +356,6 @@
 					app:checked="false"
 					app:enableInitialAnimation="true"
 					app:animateDesignLayoutOnly="true"
-					android:elevation="4dp"
 					android:padding="4dp"
 					android:background="@drawable/square_light">
 
