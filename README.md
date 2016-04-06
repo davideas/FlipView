@@ -55,43 +55,47 @@ Supported attributes with _default_ values:
 	android usual attrs
 	(see below).../>
 ```
-**ViewAnimator**
-- `android:inAnimation="@anim/grow_from_middle_x_axis"` - Identifier for the animation to use when a view is shown.
-- `android:outAnimation="@anim/shrink_to_middle_x_axis"` - Identifier for the animation to use when a view is hidden.
-- `android:animateFirstView="true"` - Defines whether to animate the current View when the ViewAnimation is first displayed.
+|**ViewAnimator**||
+|:---|:---|
+| `android:inAnimation="@anim/grow_from_middle_x_axis"` | Identifier for the animation to use when a view is shown.
+| `android:outAnimation="@anim/shrink_to_middle_x_axis"` | Identifier for the animation to use when a view is hidden.
+| `android:animateFirstView="true"` | Defines whether to animate the current View when the ViewAnimation is first displayed.
 
-**ViewFlipper**
-- `android:autoStart="false"` - When true, automatically start animating.
-- `android:flipInterval="3000"` - Time before next animation.
+|**ViewFlipper**||
+|:---|:---|
+| `android:autoStart="false"` | When true, automatically start animating.
+| `android:flipInterval="3000"` | Time before next animation.
 
-**FlipView**
-- `android:clickable="false"` - (!!) Set this if you want view reacts to the tap and animate it.
-- `app:checked="false"` - Whether or not this component is showing rear layout at startup.
-- `app:animateDesignLayoutOnly="false"` - true, animate front and rear layouts from settings + child views; false, exclude all layouts and animate _only_ child views from design layout if any. (This attribute cannot be changed at runtime).
-- `app:animationDuration="100"` - Set the main animation duration.
-- `app:anticipateInAnimationTime="0"` - Anticipate the beginning of InAnimation, this time is already subtracted from the main duration (new delay is: main duration - anticipation time).
-- `app:enableInitialAnimation="false"` - Whether or not the initial animation should start at the beginning.
-- `app:initialLayoutAnimation="@anim/scale_up"` - Starting animation.
-- `app:initialLayoutAnimationDuration="250"` - Starting animation duration.
-- `app:frontLayout="@layout/flipview_front"` - Front view layout resource (for checked state -> false).
-- `app:frontBackground="<OvalShape Drawable generated programmatically>"` - Front drawable resource (for checked state -> false).
-- `app:frontBackgroundColor="<Color.GRAY set programmatically>"` - Front view color resource (for checked state -> false).
-- `app:frontImage="@null"` - Front image resource (for checked state -> false).
-- `app:frontImagePadding="0dp"` - Front image padding.
-- `app:rearLayout="@layout/flipview_rear"` - Rear view layout resource (for checked state -> true).
-- `app:rearBackground="<OvalShape Drawable generated programmatically>"` - Rear drawable resource (for checked state -> true).
-- `app:rearBackgroundColor="Color.GRAY set programmatically"` - Rear view color resource (for checked state -> true).
-- `app:rearImage="@drawable/ic_action_done"` - Rear accept image resource.
-- `app:rearImagePadding="0dp"` - Rear image padding.
-- `app:animateRearImage="true"` - Whether or not the rear image should animate.
-- `app:rearImageAnimation="@anim/scale_up"` - Rear image animation.
-- `app:rearImageAnimationDuration="150"` - Rear image animation duration.
-- `app:rearImageAnimationDelay="animationDuration"` - Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For GMail effect set this to 0).
+| **FlipView** ||
+|:---|:---|
+| `android:clickable="false"` | **(!!)** Set this if you want view reacts to the tap and animate it.
+| `app:checked="false"` | Whether or not this component is showing rear layout at startup.
+| `app:animateDesignLayoutOnly="false"` | true, animate front and rear layouts from settings + child views; false, exclude all layouts and animate _only_ child views from design layout if any. (This attribute cannot be changed at runtime).
+| `app:animationDuration="100"` | Set the main animation duration.
+| `app:anticipateInAnimationTime="0"` | Anticipate the beginning of InAnimation, this time is already subtracted from the main duration (new delay is: main duration - anticipation time).
+| `app:enableInitialAnimation="false"` | Whether or not the initial animation should start at the beginning.
+| `app:initialLayoutAnimation="@anim/scale_up"` | Starting animation.
+| `app:initialLayoutAnimationDuration="250"` | Starting animation duration.
+| `app:frontLayout="@layout/flipview_front"` | Front view layout resource (for checked state -> false).
+| `app:frontBackground="<OvalShape Drawable generated programmatically>"` | Front drawable resource (for checked state -> false).
+| `app:frontBackgroundColor="<Color.GRAY set programmatically>"` | Front view color resource (for checked state -> false).
+| `app:frontImage="@null"` | Front image resource (for checked state -> false).
+| `app:frontImagePadding="0dp"` | Front image padding.
+| `app:rearLayout="@layout/flipview_rear"` | Rear view layout resource (for checked state -> true).
+| `app:rearBackground="<OvalShape Drawable generated programmatically>"` | Rear drawable resource (for checked state -> true).
+| `app:rearBackgroundColor="Color.GRAY set programmatically"` | Rear view color resource (for checked state -> true).
+| `app:rearImage="@drawable/ic_action_done"` | Rear accept image resource.
+| `app:rearImagePadding="0dp"` | Rear image padding.
+| `app:animateRearImage="true"` | Whether or not the rear image should animate.
+| `app:rearImageAnimation="@anim/scale_up"` | Rear image animation.
+| `app:rearImageAnimationDuration="150"` | Rear image animation duration.
+| `app:rearImageAnimationDelay="animationDuration"` | Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For Gmail effect set this to 0).
 
-**Not changeable values** (in ms)
-- `DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load all tree views before starting cascade initial animation.
-- `SCALE_STEP_DELAY = 35` - This gives an acceptable nice loading effect.
-- `STOP_LAYOUT_ANIMATION_DELAY = 1500` - This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
+|**Not changeable values** (in ms)||
+|:---|:---|
+| `DEFAULT_INITIAL_DELAY = 500` | This gives time to the activity to load all tree views before starting cascade initial animation.
+| `SCALE_STEP_DELAY = 35` | This gives an acceptable nice loading effect.
+| `STOP_LAYOUT_ANIMATION_DELAY = 1500` | This gives the time to perform all entry animations but to stop further animations when screen is fully rendered.
 
 # Limitations
 - Transparency has a little glitch when used with elevation, you could see shadow In the shape: more transparent the color is more visible the shadow is.
