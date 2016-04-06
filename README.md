@@ -2,7 +2,7 @@
 
 # FlipView
 
-###### Gmail like View & beyond - Master branch: v1.1 of 2015.11.05
+###### GMail like View & beyond - Master branch: v1.1.1 of 2016.04.06
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -22,7 +22,7 @@ which means you can call all public functions of these two Android views.
 - Custom layout, ImageView & TextView for front layout.
 - Custom layout, ImageView for rear layout.
 - Custom background Drawable & color.
-- Autostart cycle animation with custom interval.
+- AutoStart cycle animation with custom interval.
 - PictureDrawable for SVG resources.
 
 # Showcase
@@ -32,7 +32,7 @@ which means you can call all public functions of these two Android views.
 Import the library into your project using Gradle with JCenter
 ```
 dependencies {
-	compile 'eu.davidea:flipview:1.1.0'
+	compile 'eu.davidea:flipview:1.1.1'
 }
 ```
 Using bintray.com
@@ -41,7 +41,7 @@ repositories {
 	maven { url "http://dl.bintray.com/davideas/maven" }
 }
 dependencies {
-	compile 'eu.davidea:flipview:1.1.0@aar'
+	compile 'eu.davidea:flipview:1.1.1@aar'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -86,7 +86,7 @@ Supported attributes with _default_ values:
 - `app:animateRearImage="true"` - Whether or not the rear image should animate.
 - `app:rearImageAnimation="@anim/scale_up"` - Rear image animation.
 - `app:rearImageAnimationDuration="150"` - Rear image animation duration.
-- `app:rearImageAnimationDelay="animationDuration"` - Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For Gmail effect set this to 0).
+- `app:rearImageAnimationDelay="animationDuration"` - Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For GMail effect set this to 0).
 
 **Not changeable values** (in ms)
 - `DEFAULT_INITIAL_DELAY = 500` - This gives time to the activity to load all tree views before starting cascade initial animation.
@@ -99,6 +99,10 @@ Supported attributes with _default_ values:
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
 # Change Log
+###### v1.1.1 - 2016.04.06
+- Added support to enable/disable flipping programmatically. Overridden `setClickable()` and `setEnabled()` [See #8].
+- Adapted demo App to show how to make clickable/enabled/disabled the view.
+
 ###### v1.1.0 - 2015.11.05
 - New attribute `app:rearImageAnimationDelay` with relative method.
 - Fixed bugs #4 #5 #6.
@@ -108,7 +112,7 @@ Supported attributes with _default_ values:
   for the custom Drawable with the desired shape, color and stroke, which always override inner Drawables.
   Alternatively you can do this also by assigning the resource to `android:background` of the _custom_ layout.
   Because of that, at runtime, the method `setChildBackgroundDrawable(child, drawable)` has been reviewed (#2 #3).
-- Instead, if you want to use the inner Drawable (OvalShape) and only change color with alpha value, you can do it
+- Instead, if you want to use the inner Drawable (OvalShape) and only change color, you can do it
   at design time with `app:frontBackgroundColor` & `app:rearBackgroundColor` and at runtime with the new method
   `setChildBackgroundColor(child, color)`: it always creates an OvalShape with the custom color (#2 #3).
   **Note:** setBackgroundColor is the method of `android.view.View`, so it does the default job!
@@ -116,7 +120,7 @@ Supported attributes with _default_ values:
 - Added new static method to enable/disable logs at runtime, debug logs are disabled by default.
 - Added methods to retrieve front and rear ImageViews and front TextView objects.
 - Automatic layer type _software_ when setting PictureDrawable for SVG files (applied on ImageView reference only!).
-- Adapted example to show Autostart and how 2 entire layouts can be animated ;-)
+- Adapted demo App to show how AutoStart works and how 2 entire layouts can be animated ;-)
 
 ###### Old releases
 See [releases](https://github.com/davideas/FlipView/releases) for old versions.
@@ -125,7 +129,7 @@ v1.0.0 - 2015.11.01
 
 # License
 
-    Copyright 2015 Davide Steduto
+    Copyright 2016 Davide Steduto
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
