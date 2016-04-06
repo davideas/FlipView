@@ -2,7 +2,7 @@
 
 # FlipView
 
-###### GMail like View & beyond - Master branch: v1.1.1 of 2016.04.06
+###### GMail like View & beyond - Master branch: v1.1.1 of 2016.04.07
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -103,7 +103,7 @@ Supported attributes with _default_ values:
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
 # Change Log
-###### v1.1.1 - 2016.04.06
+###### v1.1.1 - 2016.04.07
 - Added support to enable/disable flipping programmatically. Overridden `setClickable()` and `setEnabled()` [See #8].
 - Adapted demo App to show how to make clickable/enabled/disabled the view.
 
