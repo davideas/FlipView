@@ -7,17 +7,21 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import eu.davidea.flipview.FlipView;
 import eu.davidea.utils.Utils;
 
+@SuppressWarnings("ConstantConditions")
 public class MainActivity extends AppCompatActivity {
 
 	private static final String HTTPS = "https://";
@@ -56,6 +60,29 @@ public class MainActivity extends AppCompatActivity {
 		//Example to set background color to the front layout programmatically
 		FlipView flipView = (FlipView) findViewById(R.id.flip_horizontal_oval_view_big);
 		flipView.setChildBackgroundColor(FlipView.FRONT_VIEW_INDEX, Color.RED);
+
+		//Handling flipping programmatically
+		AppCompatCheckBox enableCheckBox = (AppCompatCheckBox) findViewById(R.id.flag_enable);
+		enableCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				//FlipView to enable/disable
+				findViewById(R.id.flip_layout).setEnabled(!isChecked);
+				FlipView flipView = (FlipView) findViewById(R.id.flip_horizontal_oval_view_locked);
+				flipView.setClickable(isChecked);//View was set not clickable in the layout!
+
+				if (isChecked) {
+					flipView.setChildBackgroundColor(0, getResources().getColor(R.color.colorAccent));
+					flipView.setFrontImage(R.drawable.ic_lock_open_white_24dp);
+					findViewById(R.id.triangle).setBackgroundResource(R.drawable.triangle_red);
+				} else {
+					flipView.setChildBackgroundDrawable(0, R.drawable.circle_light_stroke);
+					flipView.setFrontImage(R.drawable.ic_lock_white_24dp);
+					findViewById(R.id.triangle).setBackgroundResource(R.drawable.triangle_green);
+				}
+				Log.d(MainActivity.class.getSimpleName(), isChecked ? "Layout pinned, FlipView unlocked" : "Layout auto-flip, FlipView locked");
+			}
+		});
 	}
 
 	private void initializeRecyclerView() {

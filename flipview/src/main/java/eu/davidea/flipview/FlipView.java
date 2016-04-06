@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 Davide Steduto
+ * Copyright (C) 2016 Davide Steduto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -54,44 +54,34 @@ import android.widget.ViewFlipper;
  * FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
  * the front one in favor of the back one, and vice versa. Optionally more views can be
  * displayed in series one after another since it extends {@link android.widget.ViewAnimator}.
- * <br/><br/>
- * Usage is very simple. You just need to add this View to any layout (like you would
+ * <p>Usage is very simple. You just need to add this View to any layout (like you would
  * do with any other View) and you customize the behaviours by assigning values to the
- * optional properties in the layout or programmatically.<br/>
+ * optional properties in the layout or programmatically.</p>
  * Please, refer to those attributes documentation for more details.
- * <p/>
  * <ul>
- * <li>The Views to flip can be many <b>ViewGroups</b> containing an ImageView/TextView or simply more
- * <b>Views</b> (preferable ImageView) or even a combination of these types.<br/><br/>
- * - In case of <b>ViewGroups</b> with an ImageView each, (if present) background drawable
+ * <li>The Views to flip can be many <b>ViewGroups</b> containing an ImageView/TextView or simply
+ * more <b>Views</b> (preferable ImageView) or even a combination of these types.<br/><br/>
+ * 1. In case of <b>ViewGroups</b> with an ImageView each, (if present) background drawable
  * and color are assigned to those ViewGroups and the image resources to those ImageViews.
  * In this case the entire ViewGroups (containing the ImageViews) will flip.<br/>
  * Choosing this option, when 2 ViewGroups are configured, a second animation is executed
  * on the rear ImageView after the first flip is consumed.<br/>
  * <b>Note: </b>the library contains already the checked Drawable for the rear image!<br/><br/>
- * - In case of <b>Views</b>, (if present) background drawable and color are assigned
+ * 2. In case of <b>Views</b>, (if present) background drawable and color are assigned
  * to the main ViewGroup (the FlipView) and only the simple views will be shown in series.<br/>
  * Choosing this option, no further animation will be performed on the rear Views.<br/><br/></li>
- * <p/>
- * <li>Optionally, this FlipView supports a {@link PictureDrawable} for SVG loading
- * and assignment <i>front View Only</i>. Remember to change the LayerType to
- * {@link View#LAYER_TYPE_SOFTWARE}.<br/><br/></li>
- * <p/>
- * <li>Not less this FlipView can born already flipped but also flip animation can be disabled
- * but only at design time.<br/><br/></li>
- * <p/>
- * <li>If the custom layout included a TextVIew instead of ImageView as first child, custom text can
- * be displayed. Having such TextView you can assign any text and style for the front View.
- * <br/><br/></li>
- * <p/>
- * <li>Another functionality is to assign to the entire FlipView itself, an <b>initial animation</b>
- * (by default it's a Scale animation and not enabled) in order to reach different combinations
- * of effects:<br/>
+ * <li>FlipView supports a {@link PictureDrawable} for SVG loading and assignment <i>front View
+ * Only</i>. Remember to change the LayerType to {@link View#LAYER_TYPE_SOFTWARE}.<br/><br/></li>
+ * <li>FlipView can born already flipped and enabled/disabled programmatically.<br/><br/></li>
+ * <li>If the custom layout is provided with a TextVIew instead of ImageView as first child,
+ * custom text can be displayed. Having such TextView, you can assign any text and style for the
+ * front View.<br/><br/></li>
+ * <li>Another functionality is to assign, to the entire FlipView, an <b>initial animation</b>
+ * (by default it's a Scale animation and not enabled). Different combinations of effects are
+ * possible:<br/>
  * For instance, having multiples FlipViews on the screen, this animation can be prepared for
  * simultaneous entry effect (all FlipViews will perform the animation at the same time) or
- * for a delayed entry effect (all FlipViews will perform the animation with step delay).
- * <br/><br/></li>
- * <p/>
+ * for a delayed entry effect (all FlipViews will perform the animation with step delay).</li>
  * </ul>
  * Finally, when the View is clicked, it will switch its state. The event is
  * propagated with the listener {@link OnFlippingListener#onFlipped(FlipView, boolean)}.
@@ -99,9 +89,10 @@ import android.widget.ViewFlipper;
  * method.
  *
  * @author Davide Steduto
- * @since 01/11/2015
+ * @since 01/11/2015 Created
+ * <br/>06/04/2016 Enable/disable flipping programmatically
  */
-//@SuppressWarnings("unused")
+@SuppressWarnings("unused")
 public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.OnClickListener {
 
 	private static final String TAG = FlipView.class.getSimpleName();
@@ -170,13 +161,15 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			FLIP_INITIAL_DELAY = 250,
 			FLIP_DURATION = 100,
 			INITIAL_ANIMATION_DURATION = 250,
-			REAR_IMAGE_ANIMATION_DURATION = 150;
+			REAR_IMAGE_ANIMATION_DURATION = 150,
+			DEFAULT_INTERVAL = 3000;
 	private long initialLayoutAnimationDuration,
 			mainAnimationDuration,
 			rearImageAnimationDuration,
 			rearImageAnimationDelay,
 			anticipateInAnimationTime;
-	static long initialDelay = DEFAULT_INITIAL_DELAY;
+	private static long initialDelay = DEFAULT_INITIAL_DELAY;
+	private int mFlipInterval = DEFAULT_INTERVAL;
 
 	//****************
 	// CONSTRUCTORS **
@@ -264,7 +257,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 		a.recycle();
 
-		//Apply default OnClickListener if clickablee
+		//Apply default OnClickListener if clickable
 		if (isClickable()) setOnClickListener(this);
 	}
 
@@ -279,6 +272,41 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	@Override
 	public void onClick(View v) {
 		this.showNext();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p>Setting <i>true</i> will set the click listener to this view, setting <i>false</i> will
+	 * remove the click listener completely.</p>
+	 *
+	 * @param clickable true to make the view clickable, false otherwise
+	 */
+	@Override
+	public void setClickable(boolean clickable) {
+		super.setClickable(clickable);
+		if (clickable) setOnClickListener(this);
+		else setOnClickListener(null);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * <p><b>Note:</b> If the view was set as <i>auto-start</i> and {@link #setFlipInterval(int)}
+	 * has not been called, re-enabling the view, it will have the default initial 3000ms delay.</p>
+	 *
+	 * @param enabled true if this view is enabled and flip active, false otherwise.
+	 */
+	@Override
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
+		if (isAutoStart()) {
+			if (!enabled) stopFlipping();
+			else postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					if (isEnabled()) startFlipping();
+				}
+			}, mFlipInterval);
+		}
 	}
 
 	//******************
@@ -377,6 +405,12 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	//**************
 	// ANIMATIONS **
 	//**************
+
+	@Override
+	public void setFlipInterval(int milliseconds) {
+		super.setFlipInterval(milliseconds);
+		mFlipInterval = milliseconds;
+	}
 
 	/*
 	 * Override to always display content in design mode.
@@ -581,6 +615,9 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Flip the current View and display to the next View now!
+	 * <p>Command ignored if the view is disabled.</p>
+	 *
+	 * @see #setEnabled(boolean)
 	 */
 	@Override
 	final public void showNext() {
@@ -589,8 +626,10 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Flip the current View and display to the next View with a delay.
+	 * <p>Command ignored if the view is disabled.</p>
 	 *
 	 * @param delay any custom delay
+	 * @see #setEnabled(boolean)
 	 */
 	final public void showNext(long delay) {
 		if (DEBUG) Log.d(TAG, "showNext " + (getDisplayedChild() + 1) + " delay=" + delay);
@@ -599,20 +638,24 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Flip the current View and display to the previous View now!
+	 * <p>Command ignored if the view is disabled.</p>
+	 *
+	 * @see #setEnabled(boolean)
 	 */
 	@Override
 	final public void showPrevious() {
-		this.showPrevius(0L);
+		this.showPrevious(0L);
 	}
 
 	/**
 	 * Flip the current View and display to the previous View with a delay.<br/>
-	 * If the previous
+	 * <p>Command ignored if the view is disabled.</p>
 	 *
 	 * @param delay any custom delay
+	 * @see #setEnabled(boolean)
 	 */
-	final public void showPrevius(long delay) {
-		if (DEBUG) Log.d(TAG, "showPrevius " + (getDisplayedChild() - 1) + " delay=" + delay);
+	final public void showPrevious(long delay) {
+		if (DEBUG) Log.d(TAG, "showPrevious " + (getDisplayedChild() - 1) + " delay=" + delay);
 		this.flip(getDisplayedChild() - 1, delay);
 	}
 
@@ -623,8 +666,10 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Convenience method for layout that has only 2 child Views!<br/>
 	 * Execute the flip animation with No delay.
+	 * <p>Command ignored if the view is disabled.</p>
 	 *
 	 * @param showRear <i>true</i> to show back View, <i>false</i> to show front View
+	 * @see #setEnabled(boolean)
 	 */
 	final public void flip(boolean showRear) {
 		flip(showRear, 0L);
@@ -633,9 +678,11 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Convenience method for layout that has only 2 child Views!<br/>
 	 * Execute the flip animation with a custom delay.
+	 * <p>Command ignored if the view is disabled.</p>
 	 *
 	 * @param showRear <i>true</i> to show back View, <i>false</i> to show front View
 	 * @param delay    any custom delay
+	 * @see #setEnabled(boolean)
 	 */
 	final public void flip(boolean showRear, long delay) {
 		flip(showRear ? REAR_VIEW_INDEX : FRONT_VIEW_INDEX, delay);
@@ -644,13 +691,20 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Set the state of this component to the given value, performing the
 	 * corresponding main animation and, if it exists, the rear Image animation.
+	 * <p>Command ignored if the view is disabled.</p>
 	 *
 	 * @param whichChild the progressive index of the child View (first View has index=0).
 	 * @param delay      any custom delay
+	 * @see #setEnabled(boolean)
 	 */
 	final public void flip(final int whichChild, long delay) {
-		if (DEBUG)
+		if (!isEnabled()) {
+			if (DEBUG) Log.w(TAG, "Can't flip while view is disabled");
+			return;
+		}
+		if (DEBUG) {
 			Log.d(TAG, "Flip! whichChild=" + whichChild + ", previousChild=" + getDisplayedChild() + ", delay=" + delay);
+		}
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
@@ -677,6 +731,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 
 	/**
 	 * Convenience method for layout that has only 2 child Views.
+	 * <p>Command is always performed even if the view is disabled.</p>
 	 *
 	 * @param showRear <i>true</i> to show back View, <i>false</i> to show front View
 	 * @see #flipSilently(int)
@@ -855,7 +910,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		pictureDrawable.setBounds(0, 0, radius, radius);
 		Canvas canvas = new Canvas(bitmap);
 		canvas.drawPicture(pictureDrawable.getPicture(), pictureDrawable.getBounds());
-
 		return bitmap;
 	}
 
