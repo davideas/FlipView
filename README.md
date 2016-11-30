@@ -2,7 +2,7 @@
 
 # FlipView
 
-###### GMail like View & beyond - Master branch: v1.1.1 of 2016.04.07
+###### GMail-like View & beyond - v1.1.2 built on 2016.11.30 (34KB)
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -29,10 +29,10 @@ which means you can call all public functions of these two Android views.
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
 
 #Setup
-Import the library into your project using Gradle with JCenter
+Import the library into your project using JCenter
 ```
 dependencies {
-	compile 'eu.davidea:flipview:1.1.1'
+	compile 'eu.davidea:flipview:1.1.2'
 }
 ```
 Using bintray.com
@@ -41,7 +41,7 @@ repositories {
 	maven { url "http://dl.bintray.com/davideas/maven" }
 }
 dependencies {
-	compile 'eu.davidea:flipview:1.1.1@aar'
+	compile 'eu.davidea:flipview:1.1.2@aar'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -103,9 +103,14 @@ Supported attributes with _default_ values:
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
 # Change Log
+###### v1.1.2 - 2016.11.30
+- Fixed #7: don't flip if the target child is the one currently displayed
+- Reviewed comments for javaDoc
+- Upgraded project and demoApp for API 25
+
 ###### v1.1.1 - 2016.04.07
 - Added support to enable/disable flipping programmatically. Overridden `setClickable()` and `setEnabled()` [See #8].
-- Adapted demo App to show how to make clickable/enabled/disabled the view.
+- Adapted demoApp to show how to make clickable/enabled/disabled the view.
 
 ###### v1.1.0 - 2015.11.05
 - New attribute `app:rearImageAnimationDelay` with relative method.
@@ -124,7 +129,7 @@ Supported attributes with _default_ values:
 - Added new static method to enable/disable logs at runtime, debug logs are disabled by default.
 - Added methods to retrieve front and rear ImageViews and front TextView objects.
 - Automatic layer type _software_ when setting PictureDrawable for SVG files (applied on ImageView reference only!).
-- Adapted demo App to show how AutoStart works and how 2 entire layouts can be animated ;-)
+- Adapted demoApp to show how AutoStart works and how 2 entire layouts can be animated ;-)
 
 ###### Old releases
 See [releases](https://github.com/davideas/FlipView/releases) for old versions.

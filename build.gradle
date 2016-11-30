@@ -6,9 +6,9 @@ ext {
 	developerEmail = 'dave.dna@gmail.com'
 
 	//Library
-	libraryCode = 3
-	libraryVersion = '1.1.1'
-	libraryDate = " of 2016.04.07"
+	libraryCode = 4
+	libraryVersion = '1.1.2'
+	libraryDate = " of 2016.11.30"
 	libraryName = 'FlipView'
 	libraryDescription = 'Flipping views like GMail & beyond'
 
