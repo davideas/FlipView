@@ -330,13 +330,13 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	}
 
 	/**
-	 * API 21
+	 * API 22
 	 *
 	 * @return true if the current Android version is Lollipop
-	 * @see Build.VERSION_CODES#LOLLIPOP
+	 * @see Build.VERSION_CODES#LOLLIPOP_MR1
 	 */
 	public static boolean hasLollipop() {
-		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
+		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
 	}
 
 	/**

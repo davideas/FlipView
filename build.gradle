@@ -1,18 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 ext {
-	//Author
+	// Author
 	developerId = 'davideas'
 	developerName = 'Davide Steduto'
 	developerEmail = 'dave.dna@gmail.com'
 
-	//Library
+	// Library
 	libraryCode = 4
 	libraryVersion = '1.1.2'
 	libraryDate = " of 2016.11.30"
 	libraryName = 'FlipView'
 	libraryDescription = 'Flipping views like GMail & beyond'
 
-	//Library Repository
+	// Library Repository
 	bintrayRepo = 'maven'
 	bintrayName = 'flipview'
 	publishedGroupId = 'eu.davidea'
@@ -20,13 +20,13 @@ ext {
 	siteUrl = 'https://github.com/davideas/FlipView'
 	gitUrl = 'https://github.com/davideas/FlipView.git'
 
-	//Support and Build tools version
-	minSdk = 19
+	// Support and Build tools version
+	minSdk = 14
 	targetSdk = 25
 	buildTools = "25.0.1"
 	supportLibrary = '25.0.1'
 
-	//Support Libraries dependencies
+	// Support Libraries dependencies
 	supportDependencies = [
 			design       : "com.android.support:design:${supportLibrary}",
 			recyclerview : "com.android.support:recyclerview-v7:${supportLibrary}",
