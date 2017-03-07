@@ -22,17 +22,23 @@
 
 	</android.support.design.widget.AppBarLayout>
 
-	<LinearLayout
+	<android.support.v4.widget.NestedScrollView
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical"
 		app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-		<include layout="@layout/content_flipviews"/>
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
 
-		<include layout="@layout/content_flipviews_list"/>
+			<include layout="@layout/content_flipviews"/>
 
-	</LinearLayout>
+			<include layout="@layout/content_flipviews_list"/>
+
+		</LinearLayout>
+
+	</android.support.v4.widget.NestedScrollView>
 
 	<android.support.design.widget.FloatingActionButton
 		android:id="@+id/fab"

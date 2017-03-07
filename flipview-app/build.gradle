@@ -5,7 +5,7 @@ android {
 	buildToolsVersion buildTools
 
 	defaultConfig {
-		applicationId "eu.davidea.examples.flipview"
+		applicationId "eu.davidea.samples.flipview"
 		minSdkVersion minSdk
 		targetSdkVersion targetSdk
 		versionCode libraryCode
