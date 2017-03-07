@@ -156,7 +156,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	/**
 	 * Animations attributes
 	 */
-	private boolean checked;
 	private static boolean enableInitialAnimation = true;
 	private Animation initialLayoutAnimation;
 	private Animation rearImageAnimation;
@@ -208,7 +207,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.FlipView, 0, 0);
 
 		// Flags
-		checked = a.getBoolean(R.styleable.FlipView_checked, false);
+		boolean checked = a.getBoolean(R.styleable.FlipView_checked, false);
 		boolean startupAnimation = a.getBoolean(R.styleable.FlipView_enableInitialAnimation, false);
 		boolean animateDesignChildViewsOnly = a.getBoolean(R.styleable.FlipView_animateDesignLayoutOnly, false);
 
@@ -661,7 +660,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	}
 
 	public boolean isFlipped() {
-		return checked;
+		return getDisplayedChild() > FRONT_VIEW_INDEX;
 	}
 
 	/**
@@ -703,27 +702,27 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 			if (DEBUG) Log.w(TAG, "Can't flip while view is disabled");
 			return;
 		}
+		final int childIndex = checkIndex(whichChild);
 		if (DEBUG) {
-			Log.d(TAG, "Flip! whichChild=" + whichChild + ", previousChild=" + getDisplayedChild() + ", delay=" + delay);
+			Log.d(TAG, "Flip! whichChild=" + childIndex + ", previousChild=" + getDisplayedChild() + ", delay=" + delay);
 		}
 		// Issue #7 - Don't flip if the target child is the one currently displayed
-		if (whichChild == getDisplayedChild()) {
+		if (childIndex == getDisplayedChild()) {
 			if (DEBUG) Log.w(TAG, "Already flipped to same whichChild=" + whichChild);
 			return;
 		}
 		new Handler().postDelayed(new Runnable() {
 			@Override
 			public void run() {
-				checked = (whichChild == FRONT_VIEW_INDEX || getDisplayedChild() == FRONT_VIEW_INDEX); //It's tricky!
-				setDisplayedChild(whichChild); //Start main animation
+				setDisplayedChild(childIndex); //Start main animation
 				animateRearImageIfNeeded();
-				mFlippingListener.onFlipped(FlipView.this, checked);
+				mFlippingListener.onFlipped(FlipView.this, isFlipped());
 			}
 		}, delay);
 	}
 
 	private void animateRearImageIfNeeded() {
-		if (checked && rearImage != null && rearImageAnimation != null) {
+		if (isFlipped() && rearImage != null && rearImageAnimation != null) {
 			rearImage.setAlpha(0f); //Alpha 0 and Handler are needed to avoid the glitch of the rear image
 			new Handler().postDelayed(new Runnable() {
 				@Override
@@ -759,7 +758,6 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		Animation outAnimation = super.getOutAnimation();
 		super.setInAnimation(null);
 		super.setOutAnimation(null);
-		checked = (whichChild > FRONT_VIEW_INDEX);
 		super.setDisplayedChild(whichChild);
 		super.setInAnimation(inAnimation);
 		super.setOutAnimation(outAnimation);
