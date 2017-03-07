@@ -96,6 +96,7 @@ Supported attributes with _default_ values:
 - Using layer type _software_ on the entire layout it removes the shadow/elevation.
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
+# Change Log
 ###### Latest release
 [v1.1.3](https://github.com/davideas/FlipView/releases) - 2017.03.07
 
