@@ -1,10 +1,11 @@
 [![Download](https://api.bintray.com/packages/davideas/maven/flipview/images/download.svg) ](https://bintray.com/davideas/maven/flipview/_latestVersion)
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![Licence](https://img.shields.io/badge/Licence-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
+[![Methods and Size](https://img.shields.io/badge/Methods%20and%20Size-core:%20190%20%7C%2034%20KB-e91e63.svg)](http://www.methodscount.com/?lib=eu.davidea%3Aflipview%3A1.1.3)
 
 # FlipView
 
-###### GMail-like View & beyond - v1.1.2 built on 2016.11.30 (34KB)
+###### GMail-like View & beyond - v1.1.3 built on 2017.03.07
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -18,7 +19,7 @@ Please, refer to those attributes documentation for more details.
 Not less, FlipView extends `android.widget.ViewFlipper` that extends `android.widget.ViewAnimator`,
 which means you can call all public functions of these two Android views.
 
-#### Main functionalities
+#### Main features
 - Visible during design time ;-)
 - Custom In/Out animation + entry animation + rear ImageView animation
 - Custom layout, ImageView & TextView for front layout.
@@ -34,16 +35,7 @@ which means you can call all public functions of these two Android views.
 Import the library into your project using JCenter
 ```
 dependencies {
-	compile 'eu.davidea:flipview:1.1.2'
-}
-```
-Using bintray.com
-```
-repositories {
-	maven { url "http://dl.bintray.com/davideas/maven" }
-}
-dependencies {
-	compile 'eu.davidea:flipview:1.1.2@aar'
+	compile 'eu.davidea:flipview:1.1.3'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -91,7 +83,7 @@ Supported attributes with _default_ values:
 | `app:animateRearImage="true"` | Whether or not the rear image should animate.
 | `app:rearImageAnimation="@anim/scale_up"` | Rear image animation.
 | `app:rearImageAnimationDuration="150"` | Rear image animation duration.
-| `app:rearImageAnimationDelay="animationDuration"` | Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For Gmail effect set this to 0).
+| `app:rearImageAnimationDelay="animationDuration"` | Rear image animation delay (depends the animation/duration it can be smart setting a specific delay. For GMail effect set this to 0).
 
 |**Non changeable values** (in ms)||
 |:---|:---|
@@ -104,23 +96,18 @@ Supported attributes with _default_ values:
 - Using layer type _software_ on the entire layout it removes the shadow/elevation.
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
 
-# Change Log
-###### [v1.1.2](https://github.com/davideas/FlipView/releases/tag/1.1.2) - 2016.11.30
-- Fixed #7: don't flip if the target child is the one currently displayed
-- Reviewed comments for javaDoc
-- Upgraded project and demoApp for API 25
-
-###### [v1.1.1](https://github.com/davideas/FlipView/releases/tag/1.1.1) - 2016.04.07
-- Added support to enable/disable flipping programmatically. Overridden `setClickable()` and `setEnabled()` [See #8].
-- Adapted demoApp to show how to make clickable/enabled/disabled the view.
+###### Latest release
+[v1.1.3](https://github.com/davideas/FlipView/releases) - 2017.03.07
 
 ###### Old releases
-[v1.0.0](https://github.com/davideas/FlipView/releases/tag/1.0.0) - 2015.11.01 |
-[v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05
+[v1.1.2](https://github.com/davideas/FlipView/releases/tag/1.1.2) - 2016.11.30 |
+[v1.1.1](https://github.com/davideas/FlipView/releases/tag/1.1.1) - 2016.04.07<br/>
+[v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05 |
+[v1.0.0](https://github.com/davideas/FlipView/releases/tag/1.0.0) - 2015.11.01
 
 # License
 
-    Copyright 2015-2016 Davide Steduto
+    Copyright 2015-2017 Davide Steduto
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
