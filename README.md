@@ -31,7 +31,7 @@ which means you can call all public functions of these two Android views.
 # Showcase
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
 
-#Setup
+# Setup
 Import the library into your project using JCenter
 ```
 dependencies {
@@ -41,7 +41,7 @@ dependencies {
 #### Pull requests / Issues / Improvement requests
 Feel free to contribute and ask!
 
-#Usage
+# Usage
 Supported attributes with _default_ values:
 ``` xml
 <eu.davidea.flipview.FlipView
