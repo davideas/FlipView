@@ -20,9 +20,11 @@ android {
 
 dependencies {
 	//See main build.gradle for values & versions
-	compile supportDependencies.appcompat
-	compile supportDependencies.annotations
+	compileOnly supportDependencies.appcompat
+	compileOnly supportDependencies.annotations
 }
 
-//apply from: '../install.gradle'
-//apply from: '../bintray.gradle'
+if (project.hasProperty('all') || project.hasProperty('flipview')) {
+	apply from: '../install.gradle'
+	apply from: '../bintray.gradle'
+}
