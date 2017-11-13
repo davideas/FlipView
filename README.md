@@ -106,6 +106,9 @@ Supported attributes with _default_ values:
 [v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05 |
 [v1.0.0](https://github.com/davideas/FlipView/releases/tag/1.0.0) - 2015.11.01
 
+### Thank you for your support and we will bring more amazing libraries to your productive works. We are accepting bitcoin by the address as below. Please scan the QR code to start
+![wallet](http://s32.postimg.org/sdd1oio1t/qrwallet.jpg)
+
 # License
 
     Copyright 2015-2017 Davide Steduto
