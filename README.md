@@ -1,11 +1,11 @@
 [![Download](https://api.bintray.com/packages/davideas/maven/flipview/images/download.svg) ](https://bintray.com/davideas/maven/flipview/_latestVersion)
 [![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
 [![Licence](https://img.shields.io/badge/Licence-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Methods and Size](https://img.shields.io/badge/Methods%20and%20Size-core:%20190%20%7C%2034%20KB-e91e63.svg)](http://www.methodscount.com/?lib=eu.davidea%3Aflipview%3A1.1.3)
+[![Methods and Size](https://img.shields.io/badge/Methods%20and%20Size-core:%20190%20%7C%2034%20KB-e91e63.svg)](http://www.methodscount.com/?lib=eu.davidea%3Aflipview%3A1.1.4)
 
 # FlipView
 
-###### GMail-like View & beyond - v1.1.3 built on 2017.03.07
+###### GMail-like View & beyond - v1.1.4 built on 2018.04.07
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -35,7 +35,7 @@ which means you can call all public functions of these two Android views.
 Import the library into your project using JCenter
 ```
 dependencies {
-	compile 'eu.davidea:flipview:1.1.3'
+	compile 'eu.davidea:flipview:1.1.4'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -98,9 +98,10 @@ Supported attributes with _default_ values:
 
 # Change Log
 ###### Latest release
-[v1.1.3](https://github.com/davideas/FlipView/releases) - 2017.03.07
+[v1.1.4](https://github.com/davideas/FlipView/releases) - 2018.04.07
 
 ###### Old releases
+[v1.1.3](https://github.com/davideas/FlipView/releases) - 2017.03.07
 [v1.1.2](https://github.com/davideas/FlipView/releases/tag/1.1.2) - 2016.11.30 |
 [v1.1.1](https://github.com/davideas/FlipView/releases/tag/1.1.1) - 2016.04.07<br/>
 [v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05 |
@@ -108,7 +109,7 @@ Supported attributes with _default_ values:
 
 # License
 
-    Copyright 2015-2017 Davide Steduto
+    Copyright 2015-2018 Davide Steduto
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

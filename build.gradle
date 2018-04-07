@@ -6,9 +6,9 @@ ext {
     developerEmail = 'dave.dna@gmail.com'
 
     // Library
-    libraryCode = 5
-    libraryVersion = '1.1.3'
-    libraryDate = " of 2017.03.07"
+    libraryCode = 6
+    libraryVersion = '1.1.4'
+    libraryDate = " of 2018.04.07"
     libraryName = 'FlipView'
     libraryDescription = 'Flipping views like GMail & beyond'
 
@@ -22,9 +22,9 @@ ext {
 
     // Support and Build tools version
     minSdk = 14
-    targetSdk = 26
-    buildTools = "26.0.2"
-    supportLibrary = '27.0.0'
+    targetSdk = 27
+    buildTools = "27.0.3"
+    supportLibrary = '27.1.1'
 
     // Support Libraries dependencies
     supportDependencies = [
@@ -48,8 +48,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong

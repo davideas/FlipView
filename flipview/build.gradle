@@ -1,30 +1,30 @@
 apply plugin: 'com.android.library'
 
 android {
-	compileSdkVersion targetSdk
-	buildToolsVersion buildTools
+    compileSdkVersion targetSdk
 
-	defaultConfig {
-		minSdkVersion minSdk
-		targetSdkVersion targetSdk
-		versionCode libraryCode
-		versionName libraryVersion + libraryDate
-	}
-	buildTypes {
-		release {
-			minifyEnabled false
-			proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-		}
-	}
+    defaultConfig {
+        minSdkVersion minSdk
+        targetSdkVersion targetSdk
+        versionCode libraryCode
+        versionName libraryVersion + libraryDate
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
 }
 
 dependencies {
-	//See main build.gradle for values & versions
-	compileOnly supportDependencies.appcompat
-	compileOnly supportDependencies.annotations
+    //See main build.gradle for values & versions
+    compileOnly supportDependencies.appcompat
+    compileOnly supportDependencies.annotations
 }
 
+// Execute: gradlew clean install -P flipview
 if (project.hasProperty('all') || project.hasProperty('flipview')) {
-	apply from: '../install.gradle'
-	apply from: '../bintray.gradle'
+    apply from: '../install.gradle'
+    apply from: '../bintray.gradle'
 }
