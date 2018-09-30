@@ -5,7 +5,7 @@
 
 # FlipView
 
-###### GMail-like View & beyond - v1.1.3 built on 2017.03.07
+###### GMail-like View & beyond - v1.2.0 built on 2018.09.30 with AndroidX
 
 #### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
@@ -35,7 +35,7 @@ which means you can call all public functions of these two Android views.
 Import the library into your project using JCenter
 ```
 dependencies {
-	implementation 'eu.davidea:flipview:1.1.3'
+    implementation 'eu.davidea:flipview:1.2.0'
 }
 ```
 #### Pull requests / Issues / Improvement requests
@@ -45,9 +45,9 @@ Feel free to contribute and ask!
 Supported attributes with _default_ values:
 ``` xml
 <eu.davidea.flipview.FlipView
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	android usual attrs
-	(see below).../>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android usual attrs
+    (see below).../>
 ```
 |**ViewAnimator**||
 |:---|:---|
@@ -98,9 +98,10 @@ Supported attributes with _default_ values:
 
 # Change Log
 ###### Latest release
-[v1.1.3](https://github.com/davideas/FlipView/releases) - 2017.03.07
+[v1.2.0](https://github.com/davideas/FlipView/releases) - 2018.09.30
 
 ###### Old releases
+[v1.1.3](https://github.com/davideas/FlipView/releases/tag/1.1.3) - 2017.03.07 |
 [v1.1.2](https://github.com/davideas/FlipView/releases/tag/1.1.2) - 2016.11.30 |
 [v1.1.1](https://github.com/davideas/FlipView/releases/tag/1.1.1) - 2016.04.07<br/>
 [v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05 |

@@ -19,8 +19,8 @@ android {
 
 dependencies {
     //See main build.gradle for values & versions
-    compileOnly supportDependencies.appcompat
-    compileOnly supportDependencies.annotations
+    compileOnly androidx.appCompat
+    compileOnly androidx.annotation
 }
 
 // Execute: gradlew clean install -P flipview

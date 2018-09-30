@@ -22,10 +22,8 @@ android {
 dependencies {
     //See main build.gradle for values & versions
     implementation project(':flipview')
-    implementation(supportDependencies.appcompat) {
-        transitive = true
-    }
-    implementation supportDependencies.recyclerview
-    implementation supportDependencies.design
+    implementation androidx.appCompat
+    implementation androidx.recyclerView
+    implementation google.material
 
 }

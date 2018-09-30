@@ -6,9 +6,9 @@ ext {
     developerEmail = 'dave.dna@gmail.com'
 
     // Library
-    libraryCode = 5
-    libraryVersion = '1.1.3'
-    libraryDate = " of 2017.03.07"
+    libraryCode = 6
+    libraryVersion = '1.2.0'
+    libraryDate = " of 2018.09.30"
     libraryName = 'FlipView'
     libraryDescription = 'Flipping views like GMail & beyond'
 
@@ -20,21 +20,26 @@ ext {
     siteUrl = 'https://github.com/davideas/FlipView'
     gitUrl = 'https://github.com/davideas/FlipView.git'
 
-    // Support and Build tools version
+    // SDK and Build tools version
     minSdk = 14
-    targetSdk = 27
-    buildTools = "27.0.3"
-    supportLibrary = '27.1.1'
+    targetSdk = 28 // Android Pie
+    buildTools = "28.0.3"
 
-    // Support Libraries dependencies
-    supportDependencies = [
-            design      : "com.android.support:design:${supportLibrary}",
-            recyclerview: "com.android.support:recyclerview-v7:${supportLibrary}",
-            cardview    : "com.android.support:cardview-v7:${supportLibrary}",
-            appcompat   : "com.android.support:appcompat-v7:${supportLibrary}",
-            customtabs  : "com.android.support:customtabs:${supportLibrary}",
-            support     : "com.android.support:support-v13:${supportLibrary}",
-            annotations : "com.android.support:support-annotations:${supportLibrary}"
+    // AndroidX
+    androidxVer = "1.0.0"
+    constraintVer = "1.1.2"
+    androidx = [
+            recyclerView    : "androidx.recyclerview:recyclerview:${androidxVer}",
+            appCompat       : "androidx.appcompat:appcompat:${androidxVer}",
+            cardView        : "androidx.cardview:cardview:${androidxVer}",
+            annotation      : "androidx.annotation:annotation:${androidxVer}",
+            constraintLayout: "com.android.support.constraint:constraint-layout:${constraintVer}"
+    ]
+
+    // Google Material
+    googleVer = "1.0.0"
+    google = [
+            material: "com.google.android.material:material:${androidxVer}"
     ]
 
     licenseName = 'The Apache Software License, Version 2.0'
@@ -48,8 +53,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

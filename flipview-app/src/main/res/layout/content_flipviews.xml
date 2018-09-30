@@ -246,7 +246,7 @@
 					app:frontBackground="@drawable/circle_light_stroke"
 					app:frontImage="@drawable/ic_lock_white_24dp"/>
 
-				<android.support.v7.widget.AppCompatCheckBox
+				<androidx.appcompat.widget.AppCompatCheckBox
 					android:id="@+id/flag_enable"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
