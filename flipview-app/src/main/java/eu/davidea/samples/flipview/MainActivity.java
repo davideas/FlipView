@@ -1,4 +1,4 @@
-package eu.davidea.examples.flipview;
+package eu.davidea.samples.flipview;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -12,14 +12,15 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+
 import eu.davidea.flipview.FlipView;
 import eu.davidea.utils.Utils;
 
@@ -113,16 +114,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_about) {
             MessageDialog.newInstance(
-                    R.drawable.ic_info_grey600_24dp,
-                    getString(R.string.about_title),
-                    getString(R.string.about_body,
-                            Utils.getVersionName(this),
-                            Utils.getVersionCode(this)))
+                            R.drawable.ic_info_grey600_24dp,
+                            getString(R.string.about_title),
+                            getString(R.string.about_body,
+                                    Utils.getVersionName(this),
+                                    Utils.getVersionCode(this)))
                     .show(getFragmentManager(), MessageDialog.TAG);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 }

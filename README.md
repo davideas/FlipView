@@ -1,7 +1,5 @@
-[![Download](https://api.bintray.com/packages/davideas/maven/flipview/images/download.svg) ](https://bintray.com/davideas/maven/flipview/_latestVersion)
-[![API](https://img.shields.io/badge/API-14%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=14)
-[![Licence](https://img.shields.io/badge/Licence-Apache2-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Methods and Size](https://img.shields.io/badge/Methods%20and%20Size-core:%20190%20%7C%2034%20KB-e91e63.svg)](http://www.methodscount.com/?lib=eu.davidea%3Aflipview%3A1.1.3)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
+![Size](https://img.shields.io/badge/Size-%2034%20KB-e91e63.svg)
 
 # FlipView
 
@@ -32,7 +30,7 @@ which means you can call all public functions of these two Android views.
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
 
 # Setup
-Import the library into your project using JCenter
+Import the library into your project using Maven Central Repository.
 ```
 dependencies {
     implementation 'eu.davidea:flipview:1.2.0'
@@ -109,7 +107,7 @@ Supported attributes with _default_ values:
 
 # License
 
-    Copyright 2015-2018 Davide Steduto
+    Copyright 2015-2026 Davide Steduto
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

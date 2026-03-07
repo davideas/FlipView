@@ -6,42 +6,35 @@ ext {
     developerEmail = 'dave.dna@gmail.com'
 
     // Library
-    libraryCode = 6
+    publishedGroupId = 'eu.davidea'
+    artifact = 'flipview'
     libraryVersion = '1.2.0'
+    libraryCode = 6
     libraryDate = " of 2018.09.30"
     libraryName = 'FlipView'
     libraryDescription = 'Flipping views like GMail & beyond'
-
-    // Library Repository
-    bintrayRepo = 'maven'
-    bintrayName = 'flipview'
-    publishedGroupId = 'eu.davidea'
-    artifact = bintrayName
     siteUrl = 'https://github.com/davideas/FlipView'
     gitUrl = 'https://github.com/davideas/FlipView.git'
 
-    // SDK and Build tools version
+    // Android SDK
     minSdk = 14
-    targetSdk = 28 // Android Pie
-    buildTools = "28.0.3"
+    targetSdk = 35
 
     // AndroidX
-    androidxVer = "1.0.0"
-    constraintVer = "1.1.2"
     androidx = [
-            recyclerView    : "androidx.recyclerview:recyclerview:${androidxVer}",
-            appCompat       : "androidx.appcompat:appcompat:${androidxVer}",
-            cardView        : "androidx.cardview:cardview:${androidxVer}",
-            annotation      : "androidx.annotation:annotation:${androidxVer}",
-            constraintLayout: "com.android.support.constraint:constraint-layout:${constraintVer}"
+            recyclerView    : "androidx.recyclerview:recyclerview:1.2.1",
+            appCompat       : "androidx.appcompat:appcompat:1.5.1",
+            cardView        : "androidx.cardview:cardview:1.0.0",
+            annotation      : "androidx.annotation:annotation:1.5.0",
+            constraintLayout: "androidx.constraintlayout:constraintlayout:2.1.4"
     ]
 
     // Google Material
-    googleVer = "1.0.0"
     google = [
-            material: "com.google.android.material:material:${androidxVer}"
+            material: "com.google.android.material:material:1.4.0"
     ]
 
+    // License stuff
     licenseName = 'The Apache Software License, Version 2.0'
     licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
     allLicenses = ["Apache-2.0"]
@@ -49,26 +42,20 @@ ext {
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        mavenCentral()
+        mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.android.tools.build:gradle:9.1.0'
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.36.0'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
         google()
-        maven { url "http://dl.bintray.com/davideas/maven" }
+        mavenCentral()
+        mavenLocal()
     }
-}
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
 }

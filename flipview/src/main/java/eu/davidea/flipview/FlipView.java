@@ -16,6 +16,7 @@
 
 package eu.davidea.flipview;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Resources;
@@ -335,7 +336,7 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 	 * @return true if the current Android version is Lollipop
 	 * @see Build.VERSION_CODES#LOLLIPOP_MR1
 	 */
-	public static boolean hasLollipop() {
+    public static boolean hasLollipop() {
 		return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1;
 	}
 
@@ -452,7 +453,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		return this.initialLayoutAnimation;
 	}
 
-	public void setInitialLayoutAnimation(@AnimRes int animationResId) {
+	@SuppressLint("ResourceType")
+    public void setInitialLayoutAnimation(@AnimRes int animationResId) {
 		try {
 			setInitialLayoutAnimation(animationResId > 0 ?
 					AnimationUtils.loadAnimation(getContext(), animationResId) :
@@ -487,7 +489,8 @@ public class FlipView extends ViewFlipper implements SVGPictureDrawable, View.On
 		return rearImageAnimation;
 	}
 
-	public void setRearImageAnimation(@AnimRes int animationResId) {
+	@SuppressLint("ResourceType")
+    public void setRearImageAnimation(@AnimRes int animationResId) {
 		try {
 			setRearImageAnimation(AnimationUtils.loadAnimation(getContext(),
 					animationResId > 0 ? animationResId : R.anim.scale_up));

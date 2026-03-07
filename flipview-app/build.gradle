@@ -1,20 +1,28 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'com.android.application'
+}
 
 android {
-    compileSdkVersion targetSdk
-    buildToolsVersion buildTools
+    compileSdk targetSdk
+    namespace = 'eu.davidea.samples.flipview'
 
     defaultConfig {
         applicationId "eu.davidea.samples.flipview"
-        minSdkVersion minSdk
-        targetSdkVersion targetSdk
+        minSdk = rootProject.ext.minSdk
+        targetSdk = rootProject.ext.targetSdk
         versionCode libraryCode
         versionName libraryVersion + libraryDate
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
+    }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
@@ -25,5 +33,4 @@ dependencies {
     implementation androidx.appCompat
     implementation androidx.recyclerView
     implementation google.material
-
 }
