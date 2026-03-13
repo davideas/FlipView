@@ -3,19 +3,16 @@ plugins {
 }
 
 android {
-    compileSdk targetSdk
+    compileSdk = rootProject.ext.compileSdk
     namespace = 'eu.davidea.flipview'
 
     defaultConfig {
         minSdk = rootProject.ext.minSdk
-        targetSdk = rootProject.ext.targetSdk
-        versionCode libraryCode
-        versionName libraryVersion + libraryDate
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_21
-        targetCompatibility JavaVersion.VERSION_21
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     buildTypes {
@@ -36,6 +33,5 @@ dependencies {
     compileOnly androidx.annotation
 }
 
-// Local Publishing: gradlew :flipview:publishToMavenLocal
-// Central Publishing: gradlew :flipview:publishToMavenCentral
+// Apply publishing configuration
 apply from: '../publish.gradle'

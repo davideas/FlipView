@@ -18,14 +18,15 @@ ext {
 
     // Android SDK
     minSdk = 14
+    compileSdk = 28
     targetSdk = 35
 
     // AndroidX
     androidx = [
             recyclerView    : "androidx.recyclerview:recyclerview:1.2.1",
-            appCompat       : "androidx.appcompat:appcompat:1.5.1",
+            appCompat       : "androidx.appcompat:appcompat:1.2.0",
             cardView        : "androidx.cardview:cardview:1.0.0",
-            annotation      : "androidx.annotation:annotation:1.5.0",
+            annotation      : "androidx.annotation:annotation:1.1.0",
             constraintLayout: "androidx.constraintlayout:constraintlayout:2.1.4"
     ]
 
@@ -47,8 +48,8 @@ buildscript {
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:9.1.0'
-        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.36.0'
+        classpath "com.android.tools.build:gradle:7.4.2" // Allows max compatibility to SDK 30
+        classpath 'com.vanniktech:gradle-maven-publish-plugin:0.26.0' // Max version for AGP 7.4.2
     }
 }
 

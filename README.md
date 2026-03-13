@@ -1,11 +1,17 @@
+[![API](https://img.shields.io/badge/API-30%2B-green.svg?style=flat)](https://android-arsenal.com/api?level=30)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 ![Size](https://img.shields.io/badge/Size-%2034%20KB-e91e63.svg)
 
 # FlipView
 
-###### GMail-like View & beyond - v1.2.0 built on 2018.09.30 with AndroidX
+###### GMail-like View & beyond
 
-#### Concept
+### Latest release
+- Last version [1.2.0](https://github.com/davideas/FlipView/releases)
+- Originally released on September 30, 2018.
+- Republished to Maven Central in March 2026.
+
+### Concept
 FlipView is a ViewGroup (FrameLayout) that is designed to display 2 views/layouts by flipping
 the front one in favor of the back one, and vice versa. Optionally more views can be
 displayed in series one after another or can cycle with a interval.
@@ -17,7 +23,7 @@ Please, refer to those attributes documentation for more details.
 Not less, FlipView extends `android.widget.ViewFlipper` that extends `android.widget.ViewAnimator`,
 which means you can call all public functions of these two Android views.
 
-#### Main features
+### Main features
 - Visible during design time ;-)
 - Custom In/Out animation + entry animation + rear ImageView animation
 - Custom layout, ImageView & TextView for front layout.
@@ -30,13 +36,27 @@ which means you can call all public functions of these two Android views.
 ![Showcase1](/showcase/showcase1.gif) ![Showcase2](/showcase/showcase2.gif)
 
 # Setup
+The original artifacts were hosted on JCenter. Since its shutdown, the old dependency will result in a `404 Not Found` error.
+As last contribution to the community the library has been published to Maven Central Repository.<br>
+I tried to keep the requirements as low as possible.
+
+### Minimum Requirements
+To use this library in your project, ensure your environment meets at least the following requirements:
+
+- **compileSdk** 30+ (Android 11)
+- **Gradle** 7.6+
+- **Android Gradle Plugin (AGP)** 7.4+
+- **JDK** 11+
+- **Kotlin** 1.7+
+
+### build.gradle
 Import the library into your project using Maven Central Repository.
 ```
 dependencies {
     implementation 'eu.davidea:flipview:1.2.0'
 }
 ```
-#### Pull requests / Issues / Improvement requests
+### Pull requests / Issues / Improvement requests
 Feel free to contribute and ask!
 
 # Usage
@@ -93,17 +113,6 @@ Supported attributes with _default_ values:
 - Transparency has a little glitch when used with elevation, you could see shadow In the shape: more transparent the color is more visible the shadow is.
 - Using layer type _software_ on the entire layout it removes the shadow/elevation.
 - Stroke and background color on custom Drawable should be preset by the user: too complex to determine the type of the Drawable used in order to change its color.
-
-# Change Log
-###### Latest release
-[v1.2.0](https://github.com/davideas/FlipView/releases) - 2018.09.30
-
-###### Old releases
-[v1.1.3](https://github.com/davideas/FlipView/releases/tag/1.1.3) - 2017.03.07 |
-[v1.1.2](https://github.com/davideas/FlipView/releases/tag/1.1.2) - 2016.11.30 |
-[v1.1.1](https://github.com/davideas/FlipView/releases/tag/1.1.1) - 2016.04.07<br/>
-[v1.1.0](https://github.com/davideas/FlipView/releases/tag/1.1.0) - 2015.11.05 |
-[v1.0.0](https://github.com/davideas/FlipView/releases/tag/1.0.0) - 2015.11.01
 
 # License
 
